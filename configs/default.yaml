@@ -67,6 +67,44 @@ intelligence:
     host: "localhost"
     port: 8501
 
+embedding:
+  provider: "sentence_transformers"
+  model: "all-MiniLM-L6-v2"
+  dimension: 384
+  batch_size: 64
+  device: "cpu"
+  normalize: true
+  store_text: false
+  output_dir: "pain_intelligence/knowledge/assets/phase2"
+  source_paths:
+    observation: "pain_intelligence/knowledge/assets/observations.parquet"
+    evidence: "pain_intelligence/knowledge/assets/evidence.parquet"
+    problem_signal: "pain_intelligence/knowledge/assets/problem_signals.parquet"
+
+similarity:
+  metric: "cosine"
+  similarity_threshold: 0.82
+  top_k: 20
+  batch_size: 1024
+  normalize_scores: true
+  minimum_confidence: 0.0
+  store_bidirectional: false
+  output_directory: "pain_intelligence/knowledge/assets/phase2"
+  version: "1.0"
+  embedding_model: "all-MiniLM-L6-v2"
+  embedding_provider: "sentence_transformers"
+  embedding_dimension: 384
+  allowed_relationships:
+    observation:
+      - observation
+      - evidence
+      - problem_signal
+    evidence:
+      - evidence
+      - problem_signal
+    problem_signal:
+      - problem_signal
+
 logging:
   level: "INFO"
   file: "outputs/pipeline.log"

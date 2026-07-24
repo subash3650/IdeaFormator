@@ -10,6 +10,7 @@ from rich.table import Table
 
 from pain_intelligence.pipeline.orchestrator import Orchestrator
 from phase2.embeddings.cli import embeddings_app
+from phase2.similarity.cli import similarity_app
 
 app = typer.Typer(
     name="pain-intelligence",
@@ -17,6 +18,7 @@ app = typer.Typer(
     add_completion=False,
 )
 app.add_typer(embeddings_app)
+app.add_typer(similarity_app)
 console = Console()
 
 
