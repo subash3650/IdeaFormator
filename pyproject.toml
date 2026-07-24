@@ -19,6 +19,7 @@ dependencies = [
     "langdetect>=1.0.9",
     "plotly>=5.18.0",
     "scipy>=1.11.0",
+    "sentence-transformers>=2.2.2",
 ]
 
 [project.optional-dependencies]
@@ -34,8 +35,8 @@ dev = [
 pain-intelligence = "pain_intelligence.cli:app"
 
 [tool.setuptools.packages.find]
-include = ["pain_intelligence*"]
+include = ["pain_intelligence*", "phase2*"]
 
 [tool.pytest.ini_options]
-testpaths = ["tests"]
+testpaths = ["tests", "phase2/embeddings/tests"]
 addopts = "-v --tb=short"

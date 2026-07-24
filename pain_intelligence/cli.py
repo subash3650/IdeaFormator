@@ -9,12 +9,14 @@ from rich.console import Console
 from rich.table import Table
 
 from pain_intelligence.pipeline.orchestrator import Orchestrator
+from phase2.embeddings.cli import embeddings_app
 
 app = typer.Typer(
     name="pain-intelligence",
     help="Pain Intelligence Engine - Data Ingestion & Preprocessing Pipeline",
     add_completion=False,
 )
+app.add_typer(embeddings_app)
 console = Console()
 
 
