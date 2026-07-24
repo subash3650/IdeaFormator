@@ -1,0 +1,33 @@
+version: "0.1.0"
+description: "Starting business ontology. Grows through discovery and human approval."
+categories:
+  Delivery:
+    keywords: [shipping, delivery, courier, dispatch, tracking, arrived, shipment, delivered, delivery partner, logistics, shipping address]
+    stopwords: []
+  Payment:
+    keywords: [payment, billing, invoice, subscription, charged, bill, transaction, payment method, payment gateway, checkout]
+    stopwords: []
+  Customer Support:
+    keywords: [support, customer service, helpdesk, help desk, support team, agent, representative, customer care, helpline, live chat]
+    stopwords: [support]
+  Account:
+    keywords: [login, password, account, verification, otp, authentication, sign in, sign up, registration, profile, forgot password, account settings]
+    stopwords: [account]
+  Quality:
+    keywords: [quality, defective, broken, damaged, faulty, poor quality, bad quality, defect, manufacturing defect]
+    stopwords: [quality]
+  Pricing:
+    keywords: [price, cost, expensive, overpriced, cheap, costly, pricing, overcharged, hidden charges, extra charges, overcharge, refund]
+    stopwords: [price, cost]
+  Performance:
+    keywords: [slow, lag, crash, freeze, loading, timeout, not responding, glitch, bug, hangs, performance issue, speed, buffering]
+    stopwords: []
+  Trust:
+    keywords: [scam, fraud, fake, misleading, dishonest, spam, untrustworthy, cheated, cheating, scammer, fraudulent, deceptive]
+    stopwords: []
+  UI_UX:
+    keywords: [interface, navigation, confusing, complicated, layout, design, hard to use, user interface, user experience, unintuitive, clunky]
+    stopwords: []
+  Feature:
+    keywords: [feature, functionality, capability, option, setting, add on, integration, update, upgrade, version]
+    stopwords: [feature]

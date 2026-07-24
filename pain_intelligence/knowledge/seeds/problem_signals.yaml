@@ -1,0 +1,51 @@
+version: "0.1.0"
+description: "Canonical problem signal concepts for bootstrapping normalization. Pipeline discovers new variants automatically."
+signals:
+  delivery:
+    category: Delivery
+  refund:
+    category: Refund
+  payment:
+    category: Payment
+  support:
+    category: Customer Support
+  login:
+    category: Authentication
+  account:
+    category: Account
+  subscription:
+    category: Subscription
+  shipping:
+    category: Shipping
+  app_stability:
+    category: App Stability
+  performance:
+    category: Performance
+  notification:
+    category: Notification
+  communication:
+    category: Communication
+  pricing:
+    category: Pricing
+  quality:
+    category: Quality
+  ui_ux:
+    category: UI_UX
+  trust:
+    category: Trust
+  feature:
+    category: Feature
+  cancellation:
+    category: Cancellation
+  return:
+    category: Return
+  warranty:
+    category: Warranty
+  order:
+    category: Order
+  billing:
+    category: Billing
+  privacy:
+    category: Privacy
+  security:
+    category: Security

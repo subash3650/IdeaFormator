@@ -1,0 +1,74 @@
+paths:
+  raw_datasets_dir: "Datasets"
+  outputs_dir: "outputs"
+  removed_dir: "outputs"
+
+processing:
+  chunk_size: 10000
+  batch_size: 5000
+  min_document_length: 10
+  supported_languages: []
+  random_seed: 42
+
+output:
+  formats:
+    - "parquet"
+    - "csv"
+
+preprocessing:
+  fix_encoding: true
+  remove_html: true
+  normalize_unicode: true
+  normalize_whitespace: true
+  remove_urls: true
+  process_emojis: true
+  lowercase: false
+  remove_duplicates: true
+  detect_language: false
+  max_document_length: 100000
+
+intelligence:
+  debug: false
+  output_dir: "reports"
+  sampling:
+    enabled: false
+    max_documents: 100000
+    strategy: "stratified"
+    strata_column: "platform"
+  confidence:
+    exact_dictionary_match: 0.95
+    pattern_match: 0.85
+    fuzzy_match: 0.65
+    heuristic: 0.55
+    statistical: 0.45
+    evidence_base: 0.70
+    signal_threshold: 0.80
+  extraction:
+    ngram_min_frequency: 5
+    ngram_max_features: 100
+    keyword_max_features: 100
+    entity_min_mentions: 3
+    pattern_min_confidence: 0.5
+  evidence:
+    min_observation_count: 3
+    min_document_count: 3
+    top_snippets_count: 5
+  signals:
+    min_document_count: 10
+    max_avg_rating: 3.0
+    min_confidence: 0.7
+    entity_only_filtering: true
+    generic_phrase_filtering: true
+  visualization:
+    theme: "plotly_dark"
+    width: 1200
+    height: 600
+  dashboard:
+    host: "localhost"
+    port: 8501
+
+logging:
+  level: "INFO"
+  file: "outputs/pipeline.log"
+  rotation: "10 MB"
+  retention: "7 days"

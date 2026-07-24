@@ -1,0 +1,52 @@
+version: "0.1.0"
+description: "Reusable linguistic patterns for signal extraction."
+patterns:
+  complaint:
+    - label: delivery_delay
+      patterns: ["never arrived", "delayed by", "late delivery", "didn.t arrive", "not delivered", "still waiting for", "not received yet", "delivery late", "shipping delay"]
+      confidence: 0.9
+    - label: refund_issue
+      patterns: ["refund not", "no refund", "refund pending", "refund failed", "money back", "not refunded", "refund still", "haven.t received my refund", "waiting for refund"]
+      confidence: 0.9
+    - label: defective_product
+      patterns: ["defective", "broken", "damaged", "not working", "doesn.t work", "faulty", "stopped working", "arrived broken", "arrived damaged"]
+      confidence: 0.85
+    - label: customer_support
+      patterns: ["useless support", "no response", "customer service", "help desk", "support team", "no help", "not helpful", "rude support", "support ignored"]
+      confidence: 0.85
+    - label: account_issue
+      patterns: ["can.t login", "account locked", "account suspended", "login failed", "forgot password", "verification failed", "otp not", "account blocked"]
+      confidence: 0.85
+    - label: payment_failed
+      patterns: ["payment failed", "payment declined", "transaction failed", "charge failed", "couldn.t process", "payment error", "card declined"]
+      confidence: 0.9
+    - label: overcharged
+      patterns: ["charged extra", "overcharged", "hidden charges", "additional fee", "unexpected charge", "billed twice", "double charge"]
+      confidence: 0.85
+    - label: poor_quality
+      patterns: ["poor quality", "bad quality", "very bad", "terrible", "horrible", "awful", "pathetic", "useless", "waste of money"]
+      confidence: 0.8
+
+  feature_request:
+    - label: missing_feature
+      patterns: ["i wish", "should have", "would like", "i need", "why can.t", "missing feature", "wish there was", "doesn.t have", "lacks", "should include"]
+      confidence: 0.7
+    - label: improvement_request
+      patterns: ["would be better", "could improve", "needs to be", "should be", "expect more", "hoping for"]
+      confidence: 0.65
+
+  comparison:
+    - label: switched_from
+      patterns: ["switched to", "switched from", "moved from", "moved to", "changed from", "changed to"]
+      confidence: 0.7
+    - label: better_than
+      patterns: ["better than", "worse than", "compared to", "compared with", "much better", "far better"]
+      confidence: 0.65
+    - label: alternative
+      patterns: ["alternative", "alternative to", "replacement", "instead of", "other option"]
+      confidence: 0.6
+
+  urgency:
+    - label: urgent
+      patterns: ["urgent", "immediately", "asap", "right away", "emergency", "critical", "urgently", "as soon as possible"]
+      confidence: 0.8

@@ -1,0 +1,105 @@
+version: "0.1.0"
+description: "Seed entity knowledge. Source of truth is knowledge/assets/entities.parquet."
+entities:
+  - name: Amazon
+    type: company
+    aliases: [amazon.in, amazon.com, "amazon prime", "amazon delivery"]
+  - name: Flipkart
+    type: company
+    aliases: [flipkart.com, myntra, jabong]
+  - name: Apple
+    type: company
+    aliases: [apple.com, "apple inc", "apple iphone", "apple mac"]
+  - name: Google
+    type: company
+    aliases: [google.com, "google pay", "google pixel", "gmail"]
+  - name: Microsoft
+    type: company
+    aliases: [microsoft.com, "microsoft 365", windows, office]
+  - name: Netflix
+    type: service
+    aliases: [netflix.com, "netflix app"]
+  - name: Uber
+    type: service
+    aliases: [uber.com, "uber app", "uber eats", uber eats]
+  - name: Swiggy
+    type: service
+    aliases: [swiggy.com, "swiggy app", "swiggy instamart"]
+  - name: Zomato
+    type: service
+    aliases: [zomato.com, "zomato app", "zomato delivery"]
+  - name: Razorpay
+    type: payment_method
+    aliases: [razorpay.com, razorpay]
+  - name: Paytm
+    type: payment_method
+    aliases: [paytm.com, "paytm app", "paytm wallet", "paytm payment"]
+  - name: PhonePe
+    type: payment_method
+    aliases: [phonepe.com, "phonepe app", "phonepe payment"]
+  - name: Google Pay
+    type: payment_method
+    aliases: [gpay, "google pay", "google tez"]
+  - name: BHIM
+    type: payment_method
+    aliases: [bhim, "bhim app", "bhim upi"]
+  - name: UPI
+    type: payment_method
+    aliases: ["upi payment", "upi transfer", "upi id", "upi app"]
+  - name: PayPal
+    type: payment_method
+    aliases: [paypal.com, "paypal app", "paypal payment"]
+  - name: Stripe
+    type: payment_method
+    aliases: [stripe.com, "stripe payment"]
+  - name: Blue Dart
+    type: logistics
+    aliases: ["bluedart", "blue dart tracking"]
+  - name: Delhivery
+    type: logistics
+    aliases: [delhivery.com, delhivery tracking]
+  - name: FedEx
+    type: logistics
+    aliases: [fedex.com, "fedex tracking"]
+  - name: DHL
+    type: logistics
+    aliases: [dhl.com, "dhl tracking", "dhl delivery"]
+  - name: India Post
+    type: logistics
+    aliases: ["india post tracking", "indiapost", "speed post"]
+  - name: DTDC
+    type: logistics
+    aliases: [dtdc.com, "dtdc tracking", "dtdc courier"]
+  - name: Amazon Logistics
+    type: logistics
+    aliases: ["amazon logistics", "amazon delivery partner", "amazon shipping"]
+  - name: Ekart
+    type: logistics
+    aliases: [ekart.com, "ekart tracking", "ekart logistics"]
+  - name: Android
+    type: technology
+    aliases: ["android app", "android phone", "android device"]
+  - name: iOS
+    type: technology
+    aliases: ["ios app", "iphone", "ipad", "apple ios"]
+  - name: Windows
+    type: technology
+    aliases: ["windows app", "windows pc", "microsoft windows"]
+  - name: macOS
+    type: technology
+    aliases: ["mac os", "macbook", "apple mac"]
+  - name: Samsung
+    type: company
+    aliases: [samsung.com, "samsung galaxy", "samsung phone"]
+  - name: OnePlus
+    type: company
+    aliases: [oneplus.com, "oneplus phone", "oneplus nord"]
+  - name: iPhone
+    type: product
+    aliases: ["iphone 15", "iphone 14", "iphone 13", "apple iphone"]
+  - name: Amazon Prime
+    type: product
+    aliases: ["prime video", "prime delivery", "prime membership", "amazon prime"]
+  - name: Netflix Premium
+    type: product
+    aliases: ["netflix premium", "netflix subscription"]
