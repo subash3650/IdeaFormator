@@ -1,0 +1,86 @@
+{
+  "category": "Comparison & Analysis",
+  "description": "Queries about comparing entities and deep analysis",
+  "queries": [
+    {
+      "id": "compare_01",
+      "category": "comparison",
+      "query": "Compare two opportunities",
+      "expected_intent": "compare",
+      "expected_tools": ["comparison"],
+      "min_citations": 0
+    },
+    {
+      "id": "compare_02",
+      "category": "comparison",
+      "query": "What is the difference between these trends?",
+      "expected_intent": "compare",
+      "expected_tools": ["comparison"],
+      "min_citations": 0
+    },
+    {
+      "id": "compare_03",
+      "category": "comparison",
+      "query": "Compare company A vs company B",
+      "expected_intent": "compare",
+      "expected_tools": ["comparison"],
+      "min_citations": 0
+    },
+    {
+      "id": "compare_04",
+      "category": "comparison",
+      "query": "Explain the reasoning chain for this inference",
+      "expected_intent": "explain",
+      "expected_tools": ["reasoning"],
+      "min_citations": 0
+    },
+    {
+      "id": "compare_05",
+      "category": "comparison",
+      "query": "Why is this trend growing?",
+      "expected_intent": "explain",
+      "expected_tools": ["reasoning"],
+      "min_citations": 0
+    },
+    {
+      "id": "compare_06",
+      "category": "comparison",
+      "query": "What evidence supports this trend?",
+      "expected_intent": "evidence",
+      "expected_tools": ["evidence", "knowledge_graph"],
+      "min_citations": 1
+    },
+    {
+      "id": "compare_07",
+      "category": "comparison",
+      "query": "Show me the supporting evidence",
+      "expected_intent": "evidence",
+      "expected_tools": ["evidence", "knowledge_graph"],
+      "min_citations": 0
+    },
+    {
+      "id": "compare_08",
+      "category": "comparison",
+      "query": "Compare product A and product B",
+      "expected_intent": "compare",
+      "expected_tools": ["comparison"],
+      "min_citations": 0
+    },
+    {
+      "id": "compare_09",
+      "category": "comparison",
+      "query": "Find similarities between these companies",
+      "expected_intent": "compare",
+      "expected_tools": ["comparison"],
+      "min_citations": 0
+    },
+    {
+      "id": "compare_10",
+      "category": "comparison",
+      "query": "What is the root cause analysis?",
+      "expected_intent": "query_reasoning",
+      "expected_tools": ["reasoning"],
+      "min_citations": 0
+    }
+  ]
+}

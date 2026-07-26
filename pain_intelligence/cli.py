@@ -19,6 +19,7 @@ from phase2.knowledge_graph.cli import kg_app
 from phase3.opportunity.cli import opportunity_app
 from phase3.trend.cli import trend_app
 from phase3.presentation.cli import presentation_app
+from phase4.copilot.cli import copilot_app
 
 app = typer.Typer(
     name="pain-intelligence",
@@ -34,6 +35,7 @@ app.add_typer(kg_app)
 app.add_typer(opportunity_app)
 app.add_typer(trend_app)
 app.add_typer(presentation_app)
+app.add_typer(copilot_app)
 console = Console()
 
 

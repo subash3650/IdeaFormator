@@ -1,0 +1,86 @@
+{
+  "category": "Startup Opportunities",
+  "description": "Queries about business opportunities, rankings, and recommendations",
+  "queries": [
+    {
+      "id": "startup_01",
+      "category": "startup",
+      "query": "What startup opportunities exist in AI?",
+      "expected_intent": "query_opportunity",
+      "expected_tools": ["opportunity"],
+      "min_citations": 1
+    },
+    {
+      "id": "startup_02",
+      "category": "startup",
+      "query": "Show me the top opportunities",
+      "expected_intent": "query_opportunity",
+      "expected_tools": ["opportunity"],
+      "min_citations": 1
+    },
+    {
+      "id": "startup_03",
+      "category": "startup",
+      "query": "What are the highest ranked business ideas?",
+      "expected_intent": "query_opportunity",
+      "expected_tools": ["opportunity"],
+      "min_citations": 1
+    },
+    {
+      "id": "startup_04",
+      "category": "startup",
+      "query": "Which opportunities are worth exploring?",
+      "expected_intent": "query_opportunity",
+      "expected_tools": ["opportunity"],
+      "min_citations": 0
+    },
+    {
+      "id": "startup_05",
+      "category": "startup",
+      "query": "What SaaS opportunities exist?",
+      "expected_intent": "query_opportunity",
+      "expected_tools": ["opportunity"],
+      "min_citations": 0
+    },
+    {
+      "id": "startup_06",
+      "category": "startup",
+      "query": "Find opportunities in the marketplace space",
+      "expected_intent": "query_opportunity",
+      "expected_tools": ["opportunity"],
+      "min_citations": 0
+    },
+    {
+      "id": "startup_07",
+      "category": "startup",
+      "query": "Why is this opportunity ranked highly?",
+      "expected_intent": "explain",
+      "expected_tools": ["reasoning"],
+      "min_citations": 0
+    },
+    {
+      "id": "startup_08",
+      "category": "startup",
+      "query": "Show evidence supporting this conclusion",
+      "expected_intent": "evidence",
+      "expected_tools": ["evidence", "knowledge_graph"],
+      "min_citations": 1
+    },
+    {
+      "id": "startup_09",
+      "category": "startup",
+      "query": "Which companies are solving this problem?",
+      "expected_intent": "search",
+      "expected_tools": ["search"],
+      "min_citations": 0
+    },
+    {
+      "id": "startup_10",
+      "category": "startup",
+      "query": "What is the top startup recommendation?",
+      "expected_intent": "query_opportunity",
+      "expected_tools": ["opportunity"],
+      "min_citations": 1
+    }
+  ]
+}

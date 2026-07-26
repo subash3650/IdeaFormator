@@ -1,0 +1,86 @@
+{
+  "category": "General & Edge Cases",
+  "description": "Greetings, unclear queries, and multi-turn scenarios",
+  "queries": [
+    {
+      "id": "general_01",
+      "category": "general",
+      "query": "Hello",
+      "expected_intent": "greeting",
+      "expected_tools": [],
+      "min_citations": 0
+    },
+    {
+      "id": "general_02",
+      "category": "general",
+      "query": "Hi there",
+      "expected_intent": "greeting",
+      "expected_tools": [],
+      "min_citations": 0
+    },
+    {
+      "id": "general_03",
+      "category": "general",
+      "query": "Good morning",
+      "expected_intent": "greeting",
+      "expected_tools": [],
+      "min_citations": 0
+    },
+    {
+      "id": "general_04",
+      "category": "general",
+      "query": "Search for anything about pain points",
+      "expected_intent": "search",
+      "expected_tools": ["search"],
+      "min_citations": 0
+    },
+    {
+      "id": "general_05",
+      "category": "general",
+      "query": "Tell me about machine learning",
+      "expected_intent": "search",
+      "expected_tools": ["search"],
+      "min_citations": 0
+    },
+    {
+      "id": "general_06",
+      "category": "general",
+      "query": "What reports are available?",
+      "expected_intent": "query_presentation",
+      "expected_tools": ["presentation"],
+      "min_citations": 0
+    },
+    {
+      "id": "general_07",
+      "category": "general",
+      "query": "Show me all reports",
+      "expected_intent": "query_presentation",
+      "expected_tools": ["presentation"],
+      "min_citations": 0
+    },
+    {
+      "id": "general_08",
+      "category": "general",
+      "query": "Generate a founder report",
+      "expected_intent": "briefing",
+      "expected_tools": ["opportunity", "trend", "presentation"],
+      "min_citations": 0
+    },
+    {
+      "id": "general_09",
+      "category": "general",
+      "query": "Generate a technology landscape report",
+      "expected_intent": "briefing",
+      "expected_tools": ["opportunity", "trend", "presentation"],
+      "min_citations": 0
+    },
+    {
+      "id": "general_10",
+      "category": "general",
+      "query": "asdfghjkl",
+      "expected_intent": "unknown",
+      "expected_tools": ["search"],
+      "min_citations": 0
+    }
+  ]
+}

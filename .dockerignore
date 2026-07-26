@@ -1,0 +1,15 @@
+__pycache__/
+*.pyc
+.git/
+.gitignore
+.env
+*.egg-info/
+.pytest_cache/
+.venv/
+venv/
+node_modules/
+*.md
+!README.md
+data/
+benchmarks/
+tests/

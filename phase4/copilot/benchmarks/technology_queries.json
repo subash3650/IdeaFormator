@@ -1,0 +1,86 @@
+{
+  "category": "Technology Intelligence",
+  "description": "Queries about the knowledge graph, entities, and technology landscape",
+  "queries": [
+    {
+      "id": "tech_01",
+      "category": "technology",
+      "query": "Tell me about the knowledge graph",
+      "expected_intent": "query_kg",
+      "expected_tools": ["knowledge_graph"],
+      "min_citations": 1
+    },
+    {
+      "id": "tech_02",
+      "category": "technology",
+      "query": "What entities are in the knowledge graph?",
+      "expected_intent": "query_kg",
+      "expected_tools": ["knowledge_graph"],
+      "min_citations": 0
+    },
+    {
+      "id": "tech_03",
+      "category": "technology",
+      "query": "Find companies in the knowledge graph",
+      "expected_intent": "query_kg",
+      "expected_tools": ["knowledge_graph"],
+      "min_citations": 0
+    },
+    {
+      "id": "tech_04",
+      "category": "technology",
+      "query": "Show me technology nodes",
+      "expected_intent": "query_kg",
+      "expected_tools": ["knowledge_graph"],
+      "min_citations": 0
+    },
+    {
+      "id": "tech_05",
+      "category": "technology",
+      "query": "What problem signals are tracked?",
+      "expected_intent": "query_kg",
+      "expected_tools": ["knowledge_graph"],
+      "min_citations": 0
+    },
+    {
+      "id": "tech_06",
+      "category": "technology",
+      "query": "Find evidence nodes in the graph",
+      "expected_intent": "query_kg",
+      "expected_tools": ["knowledge_graph"],
+      "min_citations": 0
+    },
+    {
+      "id": "tech_07",
+      "category": "technology",
+      "query": "Search for a specific node by label",
+      "expected_intent": "query_kg",
+      "expected_tools": ["knowledge_graph"],
+      "min_citations": 0
+    },
+    {
+      "id": "tech_08",
+      "category": "technology",
+      "query": "What technology landscape exists?",
+      "expected_intent": "query_kg",
+      "expected_tools": ["knowledge_graph"],
+      "min_citations": 0
+    },
+    {
+      "id": "tech_09",
+      "category": "technology",
+      "query": "Show reasoning chains",
+      "expected_intent": "query_reasoning",
+      "expected_tools": ["reasoning"],
+      "min_citations": 0
+    },
+    {
+      "id": "tech_10",
+      "category": "technology",
+      "query": "What root causes have been discovered?",
+      "expected_intent": "query_reasoning",
+      "expected_tools": ["reasoning"],
+      "min_citations": 1
+    }
+  ]
+}

@@ -1,0 +1,86 @@
+{
+  "category": "Market Intelligence",
+  "description": "Queries about market trends, comparisons, and statistics",
+  "queries": [
+    {
+      "id": "market_01",
+      "category": "market",
+      "query": "What trends are growing fastest?",
+      "expected_intent": "query_trend",
+      "expected_tools": ["trend"],
+      "min_citations": 1
+    },
+    {
+      "id": "market_02",
+      "category": "market",
+      "query": "Which trends are declining?",
+      "expected_intent": "query_trend",
+      "expected_tools": ["trend"],
+      "min_citations": 1
+    },
+    {
+      "id": "market_03",
+      "category": "market",
+      "query": "What technologies are emerging?",
+      "expected_intent": "query_trend",
+      "expected_tools": ["trend"],
+      "min_citations": 0
+    },
+    {
+      "id": "market_04",
+      "category": "market",
+      "query": "Which problems have become worse over time?",
+      "expected_intent": "query_trend",
+      "expected_tools": ["trend"],
+      "min_citations": 0
+    },
+    {
+      "id": "market_05",
+      "category": "market",
+      "query": "Show me the trend distribution",
+      "expected_intent": "query_trend",
+      "expected_tools": ["trend"],
+      "min_citations": 0
+    },
+    {
+      "id": "market_06",
+      "category": "market",
+      "query": "What is the overall market picture?",
+      "expected_intent": "statistics",
+      "expected_tools": ["opportunity", "trend", "reasoning", "knowledge_graph"],
+      "min_citations": 0
+    },
+    {
+      "id": "market_07",
+      "category": "market",
+      "query": "Compare two products",
+      "expected_intent": "compare",
+      "expected_tools": ["comparison"],
+      "min_citations": 0
+    },
+    {
+      "id": "market_08",
+      "category": "market",
+      "query": "Generate an executive briefing",
+      "expected_intent": "briefing",
+      "expected_tools": ["opportunity", "trend", "presentation"],
+      "min_citations": 0
+    },
+    {
+      "id": "market_09",
+      "category": "market",
+      "query": "What are the statistics for all modules?",
+      "expected_intent": "statistics",
+      "expected_tools": ["opportunity", "trend", "reasoning", "knowledge_graph"],
+      "min_citations": 0
+    },
+    {
+      "id": "market_10",
+      "category": "market",
+      "query": "Show me an investor briefing",
+      "expected_intent": "briefing",
+      "expected_tools": ["opportunity", "trend", "presentation"],
+      "min_citations": 0
+    }
+  ]
+}
