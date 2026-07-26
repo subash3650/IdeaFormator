@@ -14,6 +14,11 @@ from pain_intelligence.ingestion.cli import ingest_app
 from phase2.clustering.cli import clustering_app
 from phase2.embeddings.cli import embeddings_app
 from phase2.similarity.cli import similarity_app
+from phase2.reasoning.cli import reasoning_app
+from phase2.knowledge_graph.cli import kg_app
+from phase3.opportunity.cli import opportunity_app
+from phase3.trend.cli import trend_app
+from phase3.presentation.cli import presentation_app
 
 app = typer.Typer(
     name="pain-intelligence",
@@ -24,6 +29,11 @@ app.add_typer(ingest_app)
 app.add_typer(clustering_app)
 app.add_typer(embeddings_app)
 app.add_typer(similarity_app)
+app.add_typer(reasoning_app)
+app.add_typer(kg_app)
+app.add_typer(opportunity_app)
+app.add_typer(trend_app)
+app.add_typer(presentation_app)
 console = Console()
 
 

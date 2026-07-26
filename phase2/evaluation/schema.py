@@ -5,6 +5,29 @@ from typing import Any
 
 
 @dataclass
+class StageHealth:
+    score: float = 0.0
+    max_score: float = 100.0
+    weight: float = 1.0
+    metrics: dict[str, Any] = field(default_factory=dict)
+    warnings: list[str] = field(default_factory=list)
+    degradation_pct: float = 0.0
+
+
+@dataclass
+class ReasoningEvaluation:
+    inference_count: int = 0
+    chain_count: int = 0
+    root_cause_count: int = 0
+    evidence_aggregation_count: int = 0
+    rules_applied: list[str] = field(default_factory=list)
+    avg_inference_confidence: float = 0.0
+    avg_root_cause_depth: float = 0.0
+    has_reasoning: bool = False
+    health: StageHealth = field(default_factory=StageHealth)
+
+
+@dataclass
 class HistogramBin:
     label: str
     count: int
@@ -21,16 +44,6 @@ class DistributionStats:
     p25: float = 0.0
     p75: float = 0.0
     histogram: list[HistogramBin] = field(default_factory=list)
-
-
-@dataclass
-class StageHealth:
-    score: float = 0.0
-    max_score: float = 100.0
-    weight: float = 1.0
-    metrics: dict[str, Any] = field(default_factory=dict)
-    warnings: list[str] = field(default_factory=list)
-    degradation_pct: float = 0.0
 
 
 @dataclass
@@ -145,6 +158,31 @@ class ClusterEvaluation:
 
 
 @dataclass
+class OpportunityEvaluation:
+    total_opportunities: int = 0
+    strong_pursue_count: int = 0
+    worth_exploring_count: int = 0
+    avg_opportunity_score: float = 0.0
+    recommendation_distribution: dict[str, int] = field(default_factory=dict)
+    business_model_distribution: dict[str, int] = field(default_factory=dict)
+    has_opportunities: bool = False
+    health: StageHealth = field(default_factory=StageHealth)
+
+
+@dataclass
+class TrendEvaluation:
+    total_trends: int = 0
+    growing_count: int = 0
+    declining_count: int = 0
+    emerging_count: int = 0
+    anomaly_count: int = 0
+    cross_platform_count: int = 0
+    avg_trend_score: float = 0.0
+    has_trends: bool = False
+    health: StageHealth = field(default_factory=StageHealth)
+
+
+@dataclass
 class StageTiming:
     stage: str = ""
     elapsed_seconds: float = 0.0
@@ -159,6 +197,9 @@ class GlobalEvaluation:
     embeddings: EmbeddingEvaluation = field(default_factory=EmbeddingEvaluation)
     relationships: RelationshipEvaluation = field(default_factory=RelationshipEvaluation)
     clusters: ClusterEvaluation = field(default_factory=ClusterEvaluation)
+    reasoning: ReasoningEvaluation = field(default_factory=ReasoningEvaluation)
+    opportunities: OpportunityEvaluation = field(default_factory=OpportunityEvaluation)
+    trends: TrendEvaluation = field(default_factory=TrendEvaluation)
     overall_health_score: float = 0.0
     worst_stage: str = ""
     all_warnings: list[str] = field(default_factory=list)

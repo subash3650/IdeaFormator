@@ -66,6 +66,16 @@ def _key_metrics(ev: GlobalEvaluation) -> dict[str, Any]:
         "avg_cluster_quality": ev.clusters.quality_distribution.mean,
         "singleton_rate": ev.clusters.singleton_rate,
         "low_quality_rate": ev.clusters.low_quality_rate,
+        "reasoning_inferences": ev.reasoning.inference_count,
+        "reasoning_root_causes": ev.reasoning.root_cause_count,
+        "reasoning_confidence": ev.reasoning.avg_inference_confidence,
+        "opportunities": ev.opportunities.total_opportunities,
+        "strong_pursue_opps": ev.opportunities.strong_pursue_count,
+        "avg_opp_score": ev.opportunities.avg_opportunity_score,
+        "trends": ev.trends.total_trends,
+        "growing_trends": ev.trends.growing_count,
+        "emerging_trends": ev.trends.emerging_count,
+        "avg_trend_score": ev.trends.avg_trend_score,
     }
 
 
@@ -94,6 +104,9 @@ def _format_text_dashboard(ev: GlobalEvaluation) -> str:
         ("Embeddings", ev.embeddings.health),
         ("Relationships", ev.relationships.health),
         ("Clusters", ev.clusters.health),
+        ("Reasoning", ev.reasoning.health),
+        ("Opportunities", ev.opportunities.health),
+        ("Trends", ev.trends.health),
     ]
     for name, health in stages:
         bar = "█" * max(0, min(20, int(health.score / 5)))

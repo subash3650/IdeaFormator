@@ -12,8 +12,11 @@ from phase2.evaluation.schema import (
     EvidenceEvaluation,
     GlobalEvaluation,
     ObservationEvaluation,
+    OpportunityEvaluation,
+    ReasoningEvaluation,
     RelationshipEvaluation,
     SignalEvaluation,
+    TrendEvaluation,
 )
 
 
@@ -72,6 +75,25 @@ def generate_summary(ev: GlobalEvaluation) -> dict[str, Any]:
                 "health_score": ev.clusters.health.score,
                 "total_clusters": ev.clusters.total_clusters,
                 "warnings": ev.clusters.health.warnings,
+            },
+            "reasoning": {
+                "health_score": ev.reasoning.health.score,
+                "inference_count": ev.reasoning.inference_count,
+                "root_cause_count": ev.reasoning.root_cause_count,
+                "warnings": ev.reasoning.health.warnings,
+            },
+            "opportunities": {
+                "health_score": ev.opportunities.health.score,
+                "total_opportunities": ev.opportunities.total_opportunities,
+                "strong_pursue_count": ev.opportunities.strong_pursue_count,
+                "warnings": ev.opportunities.health.warnings,
+            },
+            "trends": {
+                "health_score": ev.trends.health.score,
+                "total_trends": ev.trends.total_trends,
+                "growing_count": ev.trends.growing_count,
+                "emerging_count": ev.trends.emerging_count,
+                "warnings": ev.trends.health.warnings,
             },
         },
         "total_warnings": len(ev.all_warnings),

@@ -11,7 +11,8 @@ class EvalConfig:
         "signals": 0.15,
         "embeddings": 0.10,
         "relationships": 0.15,
-        "clusters": 0.15,
+        "clusters": 0.125,
+        "reasoning": 0.125,
     }
 
     _thresholds: dict[str, Any] = {

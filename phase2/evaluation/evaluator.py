@@ -14,6 +14,9 @@ from phase2.evaluation.embeddings import EmbeddingEvaluator
 from phase2.evaluation.evidence import EvidenceEvaluator
 from phase2.evaluation.observation import ObservationEvaluator
 from phase2.evaluation.relationships import RelationshipEvaluator
+from phase2.evaluation.reasoning import ReasoningEvaluator
+from phase2.evaluation.opportunity import OpportunityEvaluator
+from phase2.evaluation.trend import TrendEvaluator
 from phase2.evaluation.schema import GlobalEvaluation, StageTiming
 from phase2.evaluation.signals import SignalEvaluator
 
@@ -34,6 +37,9 @@ class EvaluationOrchestrator:
         self._embeddings = EmbeddingEvaluator(self._knowledge_dir)
         self._relationships = RelationshipEvaluator(self._knowledge_dir)
         self._clusters = ClusterEvaluator(self._knowledge_dir)
+        self._reasoning = ReasoningEvaluator(self._knowledge_dir)
+        self._opportunity = OpportunityEvaluator(self._knowledge_dir)
+        self._trend = TrendEvaluator(self._knowledge_dir)
 
     def evaluate(self) -> GlobalEvaluation:
         result = GlobalEvaluation()
@@ -67,6 +73,15 @@ class EvaluationOrchestrator:
         result.embeddings = _time_eval("embeddings", self._embeddings.evaluate())
         result.relationships = _time_eval("relationships", self._relationships.evaluate())
         result.clusters = _time_eval("clusters", self._clusters.evaluate())
+
+        # Phase 3: Reasoning
+        result.reasoning = _time_eval("reasoning", self._reasoning.evaluate())
+
+        # Phase 3: Opportunities
+        result.opportunities = _time_eval("opportunities", self._opportunity.evaluate())
+
+        # Phase 3: Trends
+        result.trends = _time_eval("trends", self._trend.evaluate())
 
         # Timing
         result.pipeline_timing = [
@@ -108,6 +123,8 @@ class EvaluationOrchestrator:
             ("embeddings", result.embeddings.health),
             ("relationships", result.relationships.health),
             ("clusters", result.clusters.health),
+            ("opportunities", result.opportunities.health),
+            ("trends", result.trends.health),
         ]
 
         total_weight = 0.0
@@ -136,7 +153,7 @@ class EvaluationOrchestrator:
 
     def _collect_warnings(self, result: GlobalEvaluation) -> list[str]:
         warnings: list[str] = []
-        for stage_name in ["documents", "observations", "evidence", "signals", "embeddings", "relationships", "clusters"]:
+        for stage_name in ["documents", "observations", "evidence", "signals", "embeddings", "relationships", "clusters", "reasoning", "opportunities", "trends"]:
             stage = getattr(result, stage_name)
             if hasattr(stage, "health") and stage.health.warnings:
                 for w in stage.health.warnings:
@@ -149,7 +166,7 @@ class EvaluationOrchestrator:
         if result.worst_stage and result.overall_health_score < 80:
             recs.append(f"Focus improvement on '{result.worst_stage}' — lowest health score")
 
-        for stage_name in ["documents", "observations", "evidence", "signals", "embeddings", "relationships", "clusters"]:
+        for stage_name in ["documents", "observations", "evidence", "signals", "embeddings", "relationships", "clusters", "reasoning", "opportunities", "trends"]:
             stage = getattr(result, stage_name)
             health = stage.health.score if hasattr(stage, "health") else 0
             if health < 50:
