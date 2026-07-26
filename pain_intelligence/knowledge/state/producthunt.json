@@ -1,0 +1,12 @@
+{
+  "source": "producthunt",
+  "last_sync": "2026-07-25T16:27:46.971102Z",
+  "cursor": null,
+  "etag": null,
+  "next_page_token": null,
+  "failure_count": 0,
+  "last_error": null,
+  "total_collected": 160,
+  "rate_limit_remaining": null,
+  "rate_limit_reset": null
+}

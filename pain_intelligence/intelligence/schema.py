@@ -174,12 +174,16 @@ class Evidence(BaseModel):
 
     @staticmethod
     def to_dataframe(evidences: list[Evidence]) -> "pl.DataFrame":  # noqa: F821
+        import json
         import polars as pl
         records = []
         for e in evidences:
             d = e.model_dump()
             if d.get("entity_type"):
                 d["entity_type"] = d["entity_type"].value
+            for key, val in d.items():
+                if isinstance(val, dict):
+                    d[key] = json.dumps(val)
             records.append(d)
         if not records:
             return pl.DataFrame()

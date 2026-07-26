@@ -1,0 +1,30 @@
+{
+  "kind": "youtube#video",
+  "id": "dQw4w9WgXcQ",
+  "snippet": {
+    "publishedAt": "2026-07-15T12:00:00Z",
+    "channelId": "UC1234567890",
+    "title": "Building a Startup in 2026: Complete Guide",
+    "description": "In this video, we cover everything you need to know about building a successful startup in 2026, from idea validation to scaling your team.",
+    "tags": ["startup", "entrepreneurship", "2026", "business"],
+    "categoryId": "28",
+    "channelTitle": "Tech Startup Hub",
+    "defaultLanguage": "en",
+    "thumbnails": {
+      "high": {
+        "url": "https://i.ytimg.com/vi/dQw4w9WgXcQ/hqdefault.jpg"
+      }
+    }
+  },
+  "statistics": {
+    "viewCount": "125000",
+    "likeCount": "4500",
+    "commentCount": "342",
+    "favoriteCount": "0"
+  },
+  "contentDetails": {
+    "duration": "PT25M30S",
+    "definition": "hd",
+    "caption": "true"
+  }
+}

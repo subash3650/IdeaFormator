@@ -1,0 +1,59 @@
+ingestion:
+  pipeline_version: "0.1.0"
+  output_base: "pain_intelligence/knowledge"
+  schedule: "daily"
+  log_level: "INFO"
+  
+  collectors:
+    github:
+      enabled: true
+      api_key_env: "GITHUB_TOKEN"
+      batch_size: 5
+      max_pages: 3
+      rate_limit: 0.5
+      timeout: 30
+      retry_count: 3
+      retry_delay: 2.0
+      api_version: "v3"
+    hackernews:
+      enabled: true
+      api_key_env: null
+      batch_size: 10
+      max_pages: 2
+      rate_limit: 2.0
+      timeout: 15
+      retry_count: 3
+      retry_delay: 1.0
+    producthunt:
+      enabled: true
+      api_key_env: "PRODUCTHUNT_API_KEY"
+      batch_size: 20
+      max_pages: 3
+      rate_limit: 1.0
+      timeout: 30
+      retry_count: 3
+      retry_delay: 2.0
+    youtube:
+      enabled: true
+      api_key_env: "YOUTUBE_API_KEY"
+      batch_size: 25
+      max_pages: 3
+      rate_limit: 2.0
+      timeout: 30
+      retry_count: 3
+      retry_delay: 2.0
+    playstore:
+      enabled: true
+      api_key_env: null
+      batch_size: 100
+      max_pages: 10
+      rate_limit: 1.0
+      timeout: 30
+      retry_count: 3
+      retry_delay: 2.0
+      language: "en"
+      country: "us"
+      review_limit: 1000
+      sort: "newest"
+      apps: []
+      apps_config_path: "configs/playstore_apps.yaml"

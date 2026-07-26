@@ -7,20 +7,36 @@ from pathlib import Path
 
 import polars as pl
 
+from pain_intelligence import PIPELINE_VERSION, SCHEMA_VERSION
+from pain_intelligence.knowledge.metadata import (
+    make_asset_metadata,
+    read_parquet_metadata,
+    write_parquet_with_metadata,
+)
 from phase2.similarity.schema import RelationshipType, SemanticRelationship
 
 
 class SemanticRelationshipStore:
-    """Reads and writes semantic relationships as a single Parquet file."""
+    """Reads and writes semantic relationships as a single Parquet file.
+
+    ALWAYS overwrites existing data. Contains embedded run_id metadata.
+    """
 
     def __init__(self, base_path: Path) -> None:
         self._base_path = base_path
         self._base_path.mkdir(parents=True, exist_ok=True)
         self._path = base_path / "semantic_relationships.parquet"
+        self._run_id: str = ""
 
     @property
     def path(self) -> Path:
         return self._path
+
+    def set_run_id(self, run_id: str) -> None:
+        self._run_id = run_id
+
+    def get_run_id(self) -> str:
+        return read_parquet_metadata(self._path).get("run_id", "")
 
     @staticmethod
     def _record_to_row(r: SemanticRelationship) -> dict:
@@ -89,16 +105,21 @@ class SemanticRelationshipStore:
         }
 
     def save(self, relationships: list[SemanticRelationship]) -> Path:
-        """Write relationships, overwriting any existing file."""
+        """Write relationships, ALWAYS overwriting. Writes empty parquet if no records."""
+        metadata = make_asset_metadata(
+            run_id=self._run_id,
+            record_count=len(relationships),
+        )
+
         if not relationships:
-            return self._path
-        rows = [self._record_to_row(r) for r in relationships]
-        df = pl.DataFrame(rows, schema=self._schema())
-        df.write_parquet(str(self._path))
-        return self._path
+            df = pl.DataFrame(schema=self._schema())
+        else:
+            rows = [self._record_to_row(r) for r in relationships]
+            df = pl.DataFrame(rows, schema=self._schema())
+
+        return write_parquet_with_metadata(df, self._path, metadata=metadata)
 
     def append(self, relationships: list[SemanticRelationship]) -> Path:
-        """Append relationships to the existing file or create a new one."""
         if not relationships:
             return self._path
         rows = [self._record_to_row(r) for r in relationships]
@@ -108,24 +129,24 @@ class SemanticRelationshipStore:
             df = pl.concat([existing, new_df], how="vertical")
         else:
             df = new_df
-        df.write_parquet(str(self._path))
-        return self._path
+        metadata = make_asset_metadata(
+            run_id=self._run_id,
+            record_count=df.height,
+        )
+        return write_parquet_with_metadata(df, self._path, metadata=metadata)
 
     def load(self) -> list[SemanticRelationship]:
-        """Load all stored relationships."""
         if not self._path.exists():
             return []
         df = pl.read_parquet(str(self._path))
         return [self._row_to_record(row) for row in df.to_dicts()]
 
     def load_df(self) -> pl.DataFrame:
-        """Load all stored relationships as a Polars DataFrame."""
         if not self._path.exists():
             return pl.DataFrame(schema=self._schema())
         return pl.read_parquet(str(self._path))
 
     def count(self) -> int:
-        """Return the number of stored relationships."""
         if not self._path.exists():
             return 0
         df = pl.read_parquet(str(self._path))

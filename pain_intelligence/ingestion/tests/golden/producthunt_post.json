@@ -1,0 +1,39 @@
+{
+  "id": "PH-12345",
+  "name": "AI Code Review Bot",
+  "tagline": "Automated code reviews powered by GPT-4",
+  "description": "An AI-powered tool that automatically reviews pull requests and provides actionable feedback on code quality, security, and performance.",
+  "url": "https://www.producthunt.com/posts/ai-code-review-bot",
+  "website": "https://aicodebot.example.com",
+  "votesCount": 342,
+  "commentsCount": 67,
+  "createdAt": "2026-07-15T08:00:00Z",
+  "thumbnail": {
+    "url": "https://ph-uploads.s3.amazonaws.com/thumb_12345.jpg"
+  },
+  "topics": {
+    "edges": [
+      {
+        "node": {
+          "name": "Developer Tools"
+        }
+      },
+      {
+        "node": {
+          "name": "Artificial Intelligence"
+        }
+      }
+    ]
+  },
+  "makers": {
+    "edges": [
+      {
+        "node": {
+          "id": "user-001",
+          "name": "Jane Developer",
+          "username": "janedev"
+        }
+      }
+    ]
+  }
+}

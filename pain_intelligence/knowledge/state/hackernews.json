@@ -1,0 +1,12 @@
+{
+  "source": "hackernews",
+  "last_sync": "2026-07-25T16:25:59.877218Z",
+  "cursor": null,
+  "etag": null,
+  "next_page_token": null,
+  "failure_count": 0,
+  "last_error": null,
+  "total_collected": 2440,
+  "rate_limit_remaining": null,
+  "rate_limit_reset": null
+}

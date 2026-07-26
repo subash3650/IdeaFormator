@@ -324,12 +324,14 @@ class TestEngine:
         assert a != c
 
     def test_generate_with_missing_source(self) -> None:
+        from pain_intelligence.knowledge.exceptions import MissingAssetError
+
         cfg = EmbeddingEngineConfig(
             source_paths={SourceType.custom: Path("/nonexistent/file.parquet")},
         )
         engine = EmbeddingEngine(cfg)
-        result = engine.generate()
-        assert result["total_input"] == 0
+        with pytest.raises(MissingAssetError):
+            engine.generate()
 
     def test_verify_empty(self, tmp_path: Path) -> None:
         cfg = EmbeddingEngineConfig(

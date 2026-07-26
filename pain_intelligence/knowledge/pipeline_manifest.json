@@ -1,0 +1,72 @@
+{
+  "run_id": "20260726-174105-401634",
+  "pipeline_version": "1.5.0",
+  "schema_version": "1.0.0",
+  "started_at": "2026-07-26T17:41:05.401656+00:00",
+  "completed_at": "2026-07-26T17:41:05.572232+00:00",
+  "dataset_checksum": "e9908fec0795a966",
+  "dataset_document_count": 1965,
+  "dataset_path": "pain_intelligence\\knowledge\\processed\\processed.parquet",
+  "assets": {
+    "observations.parquet": {
+      "path": "pain_intelligence\\knowledge\\assets\\observations.parquet",
+      "run_id": "20260726-174105-401634",
+      "record_count": 1394,
+      "size_bytes": 130979,
+      "checksum": "18240ecd688c6532",
+      "generated_at": "2026-07-26T17:41:05.541919+00:00",
+      "stage": "intelligence"
+    },
+    "evidence.parquet": {
+      "path": "pain_intelligence\\knowledge\\assets\\evidence.parquet",
+      "run_id": "20260726-174105-401634",
+      "record_count": 30,
+      "size_bytes": 28220,
+      "checksum": "a03a8bb02e73ec65",
+      "generated_at": "2026-07-26T17:41:05.563803+00:00",
+      "stage": "intelligence"
+    },
+    "problem_signals.parquet": {
+      "path": "pain_intelligence\\knowledge\\assets\\problem_signals.parquet",
+      "run_id": "20260726-174105-401634",
+      "record_count": 0,
+      "size_bytes": 2912,
+      "checksum": "ccb31829f447e07b",
+      "generated_at": "2026-07-26T17:41:05.572175+00:00",
+      "stage": "intelligence"
+    }
+  },
+  "dependency_graph": [
+    {
+      "from": "processed.parquet",
+      "to": "observations.parquet"
+    },
+    {
+      "from": "observations.parquet",
+      "to": "evidence.parquet"
+    },
+    {
+      "from": "evidence.parquet",
+      "to": "problem_signals.parquet"
+    },
+    {
+      "from": "problem_signals.parquet",
+      "to": "embeddings"
+    },
+    {
+      "from": "embeddings",
+      "to": "relationships"
+    },
+    {
+      "from": "relationships",
+      "to": "clusters"
+    }
+  ],
+  "stages": {
+    "intelligence": {
+      "status": "completed",
+      "completed_at": "2026-07-26T17:41:05.572190+00:00"
+    }
+  },
+  "elapsed_seconds": 0.0
+}

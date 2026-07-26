@@ -1,0 +1,14 @@
+{
+  "id": 40000001,
+  "type": "story",
+  "title": "Show HN: I built a tool for real-time code collaboration",
+  "url": "https://example.com/collab-tool",
+  "text": "",
+  "by": "hnuser1",
+  "time": 1721496000,
+  "score": 150,
+  "descendants": 45,
+  "kids": [40000002, 40000003],
+  "dead": false,
+  "deleted": false
+}

@@ -86,7 +86,7 @@ pain_intelligence/knowledge/assets/
 *.temp
 *.bak
 *.swp
-
+api.txt
 # ===========================
 # Test Outputs
 # ===========================

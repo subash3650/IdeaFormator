@@ -41,7 +41,10 @@ class TestSemanticRelationshipStore:
     def test_save_empty(self, tmp_path: Path) -> None:
         store = SemanticRelationshipStore(tmp_path)
         store.save([])
-        assert not store.exists()
+        # Empty parquet file is still written with schema
+        assert store.exists()
+        loaded = store.load()
+        assert len(loaded) == 0
 
     def test_overwrites_on_save(self, tmp_path: Path) -> None:
         store = SemanticRelationshipStore(tmp_path)

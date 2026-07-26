@@ -1,0 +1,942 @@
+{
+  "documents": {
+    "total_documents": 1965,
+    "documents_per_source": {
+      "producthunt": 60,
+      "github": 60,
+      "hackernews": 912,
+      "playstore": 400,
+      "youtube": 533
+    },
+    "duplicate_count": 0,
+    "duplicate_rate": 0.0,
+    "avg_document_length": 424.86,
+    "avg_document_length_chars": 418.88,
+    "language_distribution": {
+      "en": 1560,
+      "fi": 2,
+      "lv": 1,
+      "ca": 11,
+      "": 17,
+      "tl": 8,
+      "cy": 9,
+      "so": 67,
+      "cs": 5,
+      "hu": 1,
+      "pt-BR": 1,
+      "en-GB": 2,
+      "sw": 3,
+      "tr": 3,
+      "ro": 17,
+      "da": 5,
+      "it": 9,
+      "es": 3,
+      "en-US": 26,
+      "ar": 2,
+      "sl": 4,
+      "hi": 5,
+      "pl": 31,
+      "ko": 6,
+      "hr": 2,
+      "vi": 3,
+      "sv": 1,
+      "ja": 1,
+      "no": 3,
+      "sq": 1,
+      "af": 36,
+      "zh-Hans": 1,
+      "pt-PT": 5,
+      "zh": 1,
+      "id": 22,
+      "lt": 1,
+      "bn": 8,
+      "pt": 37,
+      "sk": 10,
+      "de": 3,
+      "en-IN": 9,
+      "ru": 1,
+      "nl": 6,
+      "fr": 8,
+      "et": 8
+    },
+    "missing_fields": {
+      "language": 0,
+      "country": 0,
+      "platform": 0,
+      "rating": 1965,
+      "created_at": 0,
+      "author": 0
+    },
+    "empty_content_count": 1,
+    "empty_content_rate": 0.0005,
+    "metadata_completeness": 0.8333,
+    "collection_freshness_days": 4120.0,
+    "date_range": {
+      "earliest": "2015-04-14",
+      "latest": "2026-07-25"
+    },
+    "health": {
+      "score": 100.0,
+      "max_score": 100.0,
+      "weight": 0.1,
+      "metrics": {},
+      "warnings": [],
+      "degradation_pct": 0.0
+    }
+  },
+  "observations": {
+    "total_observations": 1394,
+    "total_documents": 1965,
+    "observations_per_document": {
+      "min": 1.0,
+      "max": 800.0,
+      "mean": 3.6492,
+      "median": 1.0,
+      "std": 40.809,
+      "p25": 1.0,
+      "p75": 2.0,
+      "histogram": [
+        {
+          "label": "1.0000-80.9000",
+          "count": 381,
+          "percentage": 99.74
+        },
+        {
+          "label": "80.9000-160.8000",
+          "count": 0,
+          "percentage": 0.0
+        },
+        {
+          "label": "160.8000-240.7000",
+          "count": 0,
+          "percentage": 0.0
+        },
+        {
+          "label": "240.7000-320.6000",
+          "count": 0,
+          "percentage": 0.0
+        },
+        {
+          "label": "320.6000-400.5000",
+          "count": 0,
+          "percentage": 0.0
+        },
+        {
+          "label": "400.5000-480.4000",
+          "count": 0,
+          "percentage": 0.0
+        },
+        {
+          "label": "480.4000-560.3000",
+          "count": 0,
+          "percentage": 0.0
+        },
+        {
+          "label": "560.3000-640.2000",
+          "count": 0,
+          "percentage": 0.0
+        },
+        {
+          "label": "640.2000-720.1000",
+          "count": 0,
+          "percentage": 0.0
+        },
+        {
+          "label": "720.1000-800.0001",
+          "count": 1,
+          "percentage": 0.26
+        }
+      ]
+    },
+    "entity_precision": 0.2604,
+    "entity_coverage": 0.0523,
+    "keyword_diversity": 0.0,
+    "phrase_diversity": 1.0,
+    "pattern_diversity": 0.0,
+    "extractor_contribution": {
+      "patterns": 234,
+      "phrases": 300,
+      "keywords": 200,
+      "ngrams": 300,
+      "entities": 360
+    },
+    "extractor_contribution_pct": {
+      "patterns": 16.79,
+      "phrases": 21.52,
+      "keywords": 14.35,
+      "ngrams": 21.52,
+      "entities": 25.82
+    },
+    "canonicalization_success_rate": 0.2037,
+    "knowledge_enrichment_coverage": 0.2604,
+    "type_distribution": {
+      "pattern_match": 234,
+      "keyword_tfidf": 100,
+      "phrase": 300,
+      "entity": 360,
+      "fourgram": 100,
+      "keyword_rake": 100,
+      "trigram": 100,
+      "bigram": 100
+    },
+    "health": {
+      "score": 100.0,
+      "max_score": 100.0,
+      "weight": 0.2,
+      "metrics": {},
+      "warnings": [],
+      "degradation_pct": 0.0
+    }
+  },
+  "evidence": {
+    "total_evidence": 30,
+    "total_observations": 1394,
+    "compression_ratio": 46.47,
+    "support_distribution": {
+      "min": 1.0,
+      "max": 62.0,
+      "mean": 19.4333,
+      "median": 14.0,
+      "std": 19.0363,
+      "p25": 3.0,
+      "p75": 31.0,
+      "histogram": [
+        {
+          "label": "1.0000-7.1000",
+          "count": 11,
+          "percentage": 36.67
+        },
+        {
+          "label": "7.1000-13.2000",
+          "count": 4,
+          "percentage": 13.33
+        },
+        {
+          "label": "13.2000-19.3000",
+          "count": 3,
+          "percentage": 10.0
+        },
+        {
+          "label": "19.3000-25.4000",
+          "count": 3,
+          "percentage": 10.0
+        },
+        {
+          "label": "25.4000-31.5000",
+          "count": 1,
+          "percentage": 3.33
+        },
+        {
+          "label": "31.5000-37.6000",
+          "count": 2,
+          "percentage": 6.67
+        },
+        {
+          "label": "37.6000-43.7000",
+          "count": 2,
+          "percentage": 6.67
+        },
+        {
+          "label": "43.7000-49.8000",
+          "count": 1,
+          "percentage": 3.33
+        },
+        {
+          "label": "49.8000-55.9000",
+          "count": 0,
+          "percentage": 0.0
+        },
+        {
+          "label": "55.9000-62.0001",
+          "count": 3,
+          "percentage": 10.0
+        }
+      ]
+    },
+    "category_distribution": {
+      "None": 19,
+      "Feature": 3,
+      "Delivery": 1,
+      "UI_UX": 1,
+      "Quality": 2,
+      "Customer Support": 1,
+      "Payment": 1,
+      "Performance": 1,
+      "Pricing": 1
+    },
+    "evidence_confidence": {
+      "min": 0.3546,
+      "max": 0.6392,
+      "mean": 0.4769,
+      "median": 0.4803,
+      "std": 0.0789,
+      "p25": 0.4251,
+      "p75": 0.5047,
+      "histogram": [
+        {
+          "label": "0.3546-0.3831",
+          "count": 7,
+          "percentage": 23.33
+        },
+        {
+          "label": "0.3831-0.4115",
+          "count": 0,
+          "percentage": 0.0
+        },
+        {
+          "label": "0.4115-0.4400",
+          "count": 1,
+          "percentage": 3.33
+        },
+        {
+          "label": "0.4400-0.4684",
+          "count": 5,
+          "percentage": 16.67
+        },
+        {
+          "label": "0.4684-0.4969",
+          "count": 6,
+          "percentage": 20.0
+        },
+        {
+          "label": "0.4969-0.5254",
+          "count": 4,
+          "percentage": 13.33
+        },
+        {
+          "label": "0.5254-0.5538",
+          "count": 1,
+          "percentage": 3.33
+        },
+        {
+          "label": "0.5538-0.5823",
+          "count": 2,
+          "percentage": 6.67
+        },
+        {
+          "label": "0.5823-0.6107",
+          "count": 2,
+          "percentage": 6.67
+        },
+        {
+          "label": "0.6107-0.6393",
+          "count": 2,
+          "percentage": 6.67
+        }
+      ]
+    },
+    "avg_observations_per_evidence": 21.3,
+    "entity_type_distribution": {
+      "unknown": 30
+    },
+    "health": {
+      "score": 90.0,
+      "max_score": 100.0,
+      "weight": 0.15,
+      "metrics": {},
+      "warnings": [
+        "Low evidence confidence: 0.477"
+      ],
+      "degradation_pct": 10.0
+    }
+  },
+  "signals": {
+    "total_candidates": 0,
+    "accepted_signals": 0,
+    "filtered_signals": 0,
+    "filter_reasons": {},
+    "support_distribution": {
+      "min": 0.0,
+      "max": 0.0,
+      "mean": 0.0,
+      "median": 0.0,
+      "std": 0.0,
+      "p25": 0.0,
+      "p75": 0.0,
+      "histogram": []
+    },
+    "confidence_distribution": {
+      "min": 0.0,
+      "max": 0.0,
+      "mean": 0.0,
+      "median": 0.0,
+      "std": 0.0,
+      "p25": 0.0,
+      "p75": 0.0,
+      "histogram": []
+    },
+    "category_coverage": {},
+    "category_coverage_pct": 0.0,
+    "zero_signal_explanation": "adaptive thresholds: {'support_threshold': 3, 'min_observation_count': 3, 'min_confidence': 0.7, 'max_avg_rating': 3.0, 'evidence_min_group_size': 3}; filtered: {'total_evidence_input': 30, 'signals_removed_entity_only': 15, 'signals_removed_low_documents': 7, 'signals_removed_low_confidence': 4, 'signals_removed_no_category': 4}; processed 1965 documents",
+    "health": {
+      "score": 0.0,
+      "max_score": 100.0,
+      "weight": 0.15,
+      "metrics": {},
+      "warnings": [
+        "adaptive thresholds: {'support_threshold': 3, 'min_observation_count': 3, 'min_confidence': 0.7, 'max_avg_rating': 3.0, 'evidence_min_group_size': 3}; filtered: {'total_evidence_input': 30, 'signals_removed_entity_only': 15, 'signals_removed_low_documents': 7, 'signals_removed_low_confidence': 4, 'signals_removed_no_category': 4}; processed 1965 documents"
+      ],
+      "degradation_pct": 100.0
+    }
+  },
+  "embeddings": {
+    "total_vectors": 1430,
+    "dimension": 384,
+    "provider": "sentence_transformers",
+    "model": "all-MiniLM-L6-v2",
+    "duplicate_vector_count": 56,
+    "duplicate_vector_rate": 0.0392,
+    "zero_vector_count": 0,
+    "zero_vector_rate": 0.0,
+    "vector_norm_distribution": {
+      "min": 0.9999999105817087,
+      "max": 1.0000001337562272,
+      "mean": 1.0,
+      "median": 1.0000000317701636,
+      "std": 0.0,
+      "p25": 1.000000005267643,
+      "p75": 1.0000000545622787,
+      "histogram": [
+        {
+          "label": "1.0000-1.0000",
+          "count": 13,
+          "percentage": 0.91
+        },
+        {
+          "label": "1.0000-1.0000",
+          "count": 31,
+          "percentage": 2.17
+        },
+        {
+          "label": "1.0000-1.0000",
+          "count": 67,
+          "percentage": 4.69
+        },
+        {
+          "label": "1.0000-1.0000",
+          "count": 187,
+          "percentage": 13.08
+        },
+        {
+          "label": "1.0000-1.0000",
+          "count": 292,
+          "percentage": 20.42
+        },
+        {
+          "label": "1.0000-1.0000",
+          "count": 341,
+          "percentage": 23.85
+        },
+        {
+          "label": "1.0000-1.0000",
+          "count": 286,
+          "percentage": 20.0
+        },
+        {
+          "label": "1.0000-1.0000",
+          "count": 156,
+          "percentage": 10.91
+        },
+        {
+          "label": "1.0000-1.0000",
+          "count": 47,
+          "percentage": 3.29
+        },
+        {
+          "label": "1.0000-1.0001",
+          "count": 10,
+          "percentage": 0.7
+        }
+      ]
+    },
+    "per_source_counts": {
+      "observation": 1394,
+      "evidence": 30,
+      "problem_signal": 6
+    },
+    "health": {
+      "score": 100.0,
+      "max_score": 100.0,
+      "weight": 0.1,
+      "metrics": {},
+      "warnings": [],
+      "degradation_pct": 0.0
+    }
+  },
+  "relationships": {
+    "total_relationships": 9069,
+    "average_similarity": 0.896679,
+    "similarity_distribution": {
+      "min": 0.8200770616531372,
+      "max": 1.0,
+      "mean": 0.8967,
+      "median": 0.9023969173431396,
+      "std": 0.0353,
+      "p25": 0.8705295324325562,
+      "p75": 0.9223596453666687,
+      "histogram": [
+        {
+          "label": "0.8201-0.8381",
+          "count": 657,
+          "percentage": 7.24
+        },
+        {
+          "label": "0.8381-0.8561",
+          "count": 828,
+          "percentage": 9.13
+        },
+        {
+          "label": "0.8561-0.8741",
+          "count": 964,
+          "percentage": 10.63
+        },
+        {
+          "label": "0.8741-0.8920",
+          "count": 1178,
+          "percentage": 12.99
+        },
+        {
+          "label": "0.8920-0.9100",
+          "count": 1764,
+          "percentage": 19.45
+        },
+        {
+          "label": "0.9100-0.9280",
+          "count": 1966,
+          "percentage": 21.68
+        },
+        {
+          "label": "0.9280-0.9460",
+          "count": 1265,
+          "percentage": 13.95
+        },
+        {
+          "label": "0.9460-0.9640",
+          "count": 333,
+          "percentage": 3.67
+        },
+        {
+          "label": "0.9640-0.9820",
+          "count": 36,
+          "percentage": 0.4
+        },
+        {
+          "label": "0.9820-1.0001",
+          "count": 78,
+          "percentage": 0.86
+        }
+      ]
+    },
+    "relationship_type_distribution": {
+      "similar": 9069
+    },
+    "degree_distribution": {
+      "min": 1.0,
+      "max": 119.0,
+      "mean": 21.4905,
+      "median": 19.0,
+      "std": 19.1094,
+      "p25": 5.0,
+      "p75": 28.0,
+      "histogram": [
+        {
+          "label": "1.0000-12.8000",
+          "count": 277,
+          "percentage": 32.82
+        },
+        {
+          "label": "12.8000-24.6000",
+          "count": 309,
+          "percentage": 36.61
+        },
+        {
+          "label": "24.6000-36.4000",
+          "count": 123,
+          "percentage": 14.57
+        },
+        {
+          "label": "36.4000-48.2000",
+          "count": 66,
+          "percentage": 7.82
+        },
+        {
+          "label": "48.2000-60.0000",
+          "count": 28,
+          "percentage": 3.32
+        },
+        {
+          "label": "60.0000-71.8000",
+          "count": 17,
+          "percentage": 2.01
+        },
+        {
+          "label": "71.8000-83.6000",
+          "count": 11,
+          "percentage": 1.3
+        },
+        {
+          "label": "83.6000-95.4000",
+          "count": 8,
+          "percentage": 0.95
+        },
+        {
+          "label": "95.4000-107.2000",
+          "count": 4,
+          "percentage": 0.47
+        },
+        {
+          "label": "107.2000-119.0001",
+          "count": 1,
+          "percentage": 0.12
+        }
+      ]
+    },
+    "isolated_nodes": 0,
+    "isolated_node_rate": 0.0,
+    "largest_connected_component_size": 287,
+    "largest_connected_component_pct": 0.34,
+    "confidence_distribution": {
+      "min": 0.589557599030193,
+      "max": 0.610068899198949,
+      "mean": 0.5986,
+      "median": 0.5993614648915553,
+      "std": 0.0041,
+      "p25": 0.5956576612347311,
+      "p75": 0.601626852687559,
+      "histogram": [
+        {
+          "label": "0.5896-0.5916",
+          "count": 596,
+          "percentage": 6.57
+        },
+        {
+          "label": "0.5916-0.5937",
+          "count": 786,
+          "percentage": 8.67
+        },
+        {
+          "label": "0.5937-0.5957",
+          "count": 912,
+          "percentage": 10.06
+        },
+        {
+          "label": "0.5957-0.5978",
+          "count": 1052,
+          "percentage": 11.6
+        },
+        {
+          "label": "0.5978-0.5998",
+          "count": 1638,
+          "percentage": 18.06
+        },
+        {
+          "label": "0.5998-0.6019",
+          "count": 2017,
+          "percentage": 22.24
+        },
+        {
+          "label": "0.6019-0.6039",
+          "count": 1494,
+          "percentage": 16.47
+        },
+        {
+          "label": "0.6039-0.6060",
+          "count": 444,
+          "percentage": 4.9
+        },
+        {
+          "label": "0.6060-0.6080",
+          "count": 52,
+          "percentage": 0.57
+        },
+        {
+          "label": "0.6080-0.6102",
+          "count": 78,
+          "percentage": 0.86
+        }
+      ]
+    },
+    "health": {
+      "score": 100.0,
+      "max_score": 100.0,
+      "weight": 0.15,
+      "metrics": {},
+      "warnings": [],
+      "degradation_pct": 0.0
+    }
+  },
+  "clusters": {
+    "total_clusters": 17,
+    "total_members": 844,
+    "cluster_size_distribution": {
+      "min": 3.0,
+      "max": 419.0,
+      "mean": 49.6471,
+      "median": 3.0,
+      "std": 112.2911,
+      "p25": 3.0,
+      "p75": 7.0,
+      "histogram": [
+        {
+          "label": "3.0000-44.6000",
+          "count": 14,
+          "percentage": 82.35
+        },
+        {
+          "label": "44.6000-86.2000",
+          "count": 0,
+          "percentage": 0.0
+        },
+        {
+          "label": "86.2000-127.8000",
+          "count": 1,
+          "percentage": 5.88
+        },
+        {
+          "label": "127.8000-169.4000",
+          "count": 0,
+          "percentage": 0.0
+        },
+        {
+          "label": "169.4000-211.0000",
+          "count": 0,
+          "percentage": 0.0
+        },
+        {
+          "label": "211.0000-252.6000",
+          "count": 0,
+          "percentage": 0.0
+        },
+        {
+          "label": "252.6000-294.2000",
+          "count": 1,
+          "percentage": 5.88
+        },
+        {
+          "label": "294.2000-335.8000",
+          "count": 0,
+          "percentage": 0.0
+        },
+        {
+          "label": "335.8000-377.4000",
+          "count": 0,
+          "percentage": 0.0
+        },
+        {
+          "label": "377.4000-419.0001",
+          "count": 1,
+          "percentage": 5.88
+        }
+      ]
+    },
+    "quality_distribution": {
+      "min": 0.5310372488344955,
+      "max": 1.0,
+      "mean": 0.8697,
+      "median": 0.9532431721687316,
+      "std": 0.1499,
+      "p25": 0.8047772005200386,
+      "p75": 0.984952987829844,
+      "histogram": [
+        {
+          "label": "0.5310-0.5779",
+          "count": 2,
+          "percentage": 11.76
+        },
+        {
+          "label": "0.5779-0.6248",
+          "count": 0,
+          "percentage": 0.0
+        },
+        {
+          "label": "0.6248-0.6717",
+          "count": 1,
+          "percentage": 5.88
+        },
+        {
+          "label": "0.6717-0.7186",
+          "count": 0,
+          "percentage": 0.0
+        },
+        {
+          "label": "0.7186-0.7655",
+          "count": 0,
+          "percentage": 0.0
+        },
+        {
+          "label": "0.7655-0.8124",
+          "count": 2,
+          "percentage": 11.76
+        },
+        {
+          "label": "0.8124-0.8593",
+          "count": 1,
+          "percentage": 5.88
+        },
+        {
+          "label": "0.8593-0.9062",
+          "count": 2,
+          "percentage": 11.76
+        },
+        {
+          "label": "0.9062-0.9531",
+          "count": 0,
+          "percentage": 0.0
+        },
+        {
+          "label": "0.9531-1.0001",
+          "count": 9,
+          "percentage": 52.94
+        }
+      ]
+    },
+    "density_distribution": {
+      "min": 0.04133788582978383,
+      "max": 1.0,
+      "mean": 0.776,
+      "median": 1.0,
+      "std": 0.3155,
+      "p25": 0.6666666666666666,
+      "p75": 1.0,
+      "histogram": [
+        {
+          "label": "0.0413-0.1372",
+          "count": 2,
+          "percentage": 11.76
+        },
+        {
+          "label": "0.1372-0.2331",
+          "count": 0,
+          "percentage": 0.0
+        },
+        {
+          "label": "0.2331-0.3289",
+          "count": 1,
+          "percentage": 5.88
+        },
+        {
+          "label": "0.3289-0.4248",
+          "count": 0,
+          "percentage": 0.0
+        },
+        {
+          "label": "0.4248-0.5207",
+          "count": 0,
+          "percentage": 0.0
+        },
+        {
+          "label": "0.5207-0.6165",
+          "count": 0,
+          "percentage": 0.0
+        },
+        {
+          "label": "0.6165-0.7124",
+          "count": 3,
+          "percentage": 17.65
+        },
+        {
+          "label": "0.7124-0.8083",
+          "count": 0,
+          "percentage": 0.0
+        },
+        {
+          "label": "0.8083-0.9041",
+          "count": 2,
+          "percentage": 11.76
+        },
+        {
+          "label": "0.9041-1.0001",
+          "count": 9,
+          "percentage": 52.94
+        }
+      ]
+    },
+    "low_quality_count": 0,
+    "low_quality_rate": 0.0,
+    "largest_clusters": [
+      {
+        "cluster_id": "590ea6a5880876830e90d2ee0fe476a56944d5334b4ba0745c2f8dcc2dfd305f",
+        "member_count": 419,
+        "quality_score": 0.5310372488344955
+      },
+      {
+        "cluster_id": "f0618425013942a354084bb061e91db1c82e042475636d02be449d6e394b608b",
+        "member_count": 266,
+        "quality_score": 0.5626098215775497
+      },
+      {
+        "cluster_id": "f36f42eca2002672a6dac279f77ab1d7ba71c3ac4438a23c422d1307e2ad97bc",
+        "member_count": 98,
+        "quality_score": 0.6574082731653208
+      },
+      {
+        "cluster_id": "743f947711a731dae408cc9e462954efb4052f1d941291b6cb77e2efe583a102",
+        "member_count": 11,
+        "quality_score": 0.8195197270661245
+      },
+      {
+        "cluster_id": "72747ad85273858a13683a448f382761d703436ae416d0fdce9d36941dfe1076",
+        "member_count": 7,
+        "quality_score": 0.8921233289535084
+      }
+    ],
+    "orphan_concepts": 0,
+    "orphan_concept_rate": 0.0,
+    "singleton_count": 0,
+    "singleton_rate": 0.0,
+    "cluster_type_distribution": {
+      "normal": 14,
+      "low_quality": 3
+    },
+    "health": {
+      "score": 100.0,
+      "max_score": 100.0,
+      "weight": 0.15,
+      "metrics": {},
+      "warnings": [],
+      "degradation_pct": 0.0
+    }
+  },
+  "overall_health_score": 83.5,
+  "worst_stage": "signals",
+  "all_warnings": [
+    "[evidence] Low evidence confidence: 0.477",
+    "[signals] adaptive thresholds: {'support_threshold': 3, 'min_observation_count': 3, 'min_confidence': 0.7, 'max_avg_rating': 3.0, 'evidence_min_group_size': 3}; filtered: {'total_evidence_input': 30, 'signals_removed_entity_only': 15, 'signals_removed_low_documents': 7, 'signals_removed_low_confidence': 4, 'signals_removed_no_category': 4}; processed 1965 documents"
+  ],
+  "recommendations": [
+    "Critical attention needed: signals (score: 0.0)",
+    "Investigate signal discovery: adaptive thresholds: {'support_threshold': 3, 'min_observation_count': 3, 'min_confidence': 0.7, 'max_avg_rating': 3.0, 'evidence_min_group_size': 3}; filtered: {'total_evidence_input': 30, 'signals_removed_entity_only': 15, 'signals_removed_low_documents': 7, 'signals_removed_low_confidence': 4, 'signals_removed_no_category': 4}; processed 1965 documents"
+  ],
+  "pipeline_timing": [
+    {
+      "stage": "documents",
+      "elapsed_seconds": 0.0
+    },
+    {
+      "stage": "observations",
+      "elapsed_seconds": 0.0
+    },
+    {
+      "stage": "evidence",
+      "elapsed_seconds": 0.0
+    },
+    {
+      "stage": "signals",
+      "elapsed_seconds": 0.0
+    },
+    {
+      "stage": "embeddings",
+      "elapsed_seconds": 0.0
+    },
+    {
+      "stage": "relationships",
+      "elapsed_seconds": 0.0
+    },
+    {
+      "stage": "clusters",
+      "elapsed_seconds": 0.0
+    }
+  ],
+  "generated_at": "2026-07-26T17:58:25.225728+00:00",
+  "evaluation_version": "1.0.0"
+}

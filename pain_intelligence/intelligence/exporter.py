@@ -14,12 +14,33 @@ from pain_intelligence.knowledge.store import KnowledgeStore
 
 
 class KnowledgeExporter:
-    """Exports knowledge assets as Parquet + JSON."""
+    """Exports knowledge assets as Parquet + JSON.
+
+    ALWAYS writes assets, even with zero records (writes empty Parquet).
+    """
 
     def __init__(self, store: KnowledgeStore, output_dir: str | Path = "reports") -> None:
         self.store = store
         self.output_dir = Path(output_dir)
         self.output_dir.mkdir(parents=True, exist_ok=True)
+        self._input_checksum: str = ""
+        self._input_document_count: int = 0
+
+    @property
+    def input_checksum(self) -> str:
+        return self._input_checksum
+
+    @input_checksum.setter
+    def input_checksum(self, value: str) -> None:
+        self._input_checksum = value
+
+    @property
+    def input_document_count(self) -> int:
+        return self._input_document_count
+
+    @input_document_count.setter
+    def input_document_count(self, value: int) -> None:
+        self._input_document_count = value
 
     def export(
         self,
@@ -28,27 +49,39 @@ class KnowledgeExporter:
         signals: list[ProblemSignal] | None = None,
         filtering_stats: dict[str, Any] | None = None,
     ) -> dict[str, Path]:
-        """Export all assets to Parquet (via store) and JSON (via reports dir)."""
+        """Export all assets to Parquet (via store) and JSON (via reports dir).
+
+        ALWAYS writes each asset — even if empty — to prevent stale data.
+        """
         exported: dict[str, Path] = {}
 
-        # Store assets (Parquet)
-        if observations is not None:
-            obs_df = self._observations_to_df(observations)
-            if len(obs_df) > 0:
-                path = self.store.write_asset("observations", obs_df)
-                exported["observations.parquet"] = path
+        # Store assets (Parquet) — always write, even if empty
+        obs_df = self._observations_to_df(observations or [])
+        path = self.store.write_asset(
+            "observations",
+            obs_df,
+            input_checksum=self._input_checksum,
+            input_document_count=self._input_document_count,
+        )
+        exported["observations.parquet"] = path
 
-        if evidence is not None:
-            ev_df = Evidence.to_dataframe(evidence)
-            if len(ev_df) > 0:
-                path = self.store.write_asset("evidence", ev_df)
-                exported["evidence.parquet"] = path
+        ev_df = Evidence.to_dataframe(evidence or [])
+        path = self.store.write_asset(
+            "evidence",
+            ev_df,
+            input_checksum=self._input_checksum,
+            input_document_count=self._input_document_count,
+        )
+        exported["evidence.parquet"] = path
 
-        if signals is not None:
-            sig_df = ProblemSignal.to_dataframe(signals)
-            if len(sig_df) > 0:
-                path = self.store.write_asset("problem_signals", sig_df)
-                exported["problem_signals.parquet"] = path
+        sig_df = ProblemSignal.to_dataframe(signals or [])
+        path = self.store.write_asset(
+            "problem_signals",
+            sig_df,
+            input_checksum=self._input_checksum,
+            input_document_count=self._input_document_count,
+        )
+        exported["problem_signals.parquet"] = path
 
         # Comprehensive intelligence report (JSON)
         reports = build_reports(
@@ -62,7 +95,7 @@ class KnowledgeExporter:
             json.dump(reports, f, indent=2, default=str, ensure_ascii=False)
         exported["intelligence_report.json"] = json_path
 
-        # Signal quality report (separate, focused on precision metrics)
+        # Signal quality report
         if filtering_stats is not None or signals is not None:
             quality = build_reports(
                 observations=observations,

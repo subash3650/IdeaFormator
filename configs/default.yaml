@@ -110,3 +110,20 @@ logging:
   file: "outputs/pipeline.log"
   rotation: "10 MB"
   retention: "7 days"
+
+clustering:
+  provider: "connected_components"
+  minimum_cluster_size: 3
+  maximum_cluster_size: 500
+  relationship_threshold: 0.82
+  quality_threshold: 0.70
+  remove_singletons: true
+  merge_small_clusters: true
+  deterministic: true
+  output_directory: "pain_intelligence/knowledge/assets/phase2"
+  version: "1.0"
+  quality_weights:
+    cohesion: 0.35
+    density: 0.25
+    separation: 0.20
+    connectivity: 0.20

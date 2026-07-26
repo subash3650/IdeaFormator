@@ -78,7 +78,7 @@ class TestSimilarityEngine:
         assert "elapsed_seconds" in result
         assert "avg_similarity" in result
 
-    def test_generate_skips_existing(self, tmp_path: Path) -> None:
+    def test_generate_always_overwrites(self, tmp_path: Path) -> None:
         embed_path = tmp_path / "embeddings_observation.parquet"
         _create_embedding_parquet(embed_path, n=5, dim=64, intra_cluster_similarity=0.95)
 
@@ -91,9 +91,10 @@ class TestSimilarityEngine:
             source_paths={SourceType.observation: embed_path},
         )
         engine = SimilarityEngine(cfg)
-        engine.generate(force=True)
-        result = engine.generate(force=False)
-        assert result.get("status") == "skipped"
+        result1 = engine.generate(force=True)
+        result2 = engine.generate(force=True)
+        # Always overwrites — the second run should still produce relationships
+        assert result2["total_relationships"] > 0
 
     def test_generate_force(self, tmp_path: Path) -> None:
         embed_path = tmp_path / "embeddings_observation.parquet"

@@ -1,0 +1,12 @@
+{
+  "source": "playstore",
+  "last_sync": "2026-07-25T17:12:30.372404Z",
+  "cursor": null,
+  "etag": null,
+  "next_page_token": null,
+  "failure_count": 0,
+  "last_error": null,
+  "total_collected": 410,
+  "rate_limit_remaining": null,
+  "rate_limit_reset": null
+}

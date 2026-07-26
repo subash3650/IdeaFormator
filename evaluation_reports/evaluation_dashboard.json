@@ -1,0 +1,65 @@
+{
+  "generated_at": "2026-07-26T17:58:25.225728+00:00",
+  "evaluation_version": "1.0.0",
+  "overall_health_score": 83.5,
+  "worst_stage": "signals",
+  "stages": {
+    "documents": {
+      "health_score": 100.0,
+      "total_documents": 1965,
+      "duplicate_rate": 0.0,
+      "metadata_completeness": 0.8333
+    },
+    "observations": {
+      "health_score": 100.0,
+      "total_observations": 1394,
+      "enrichment_coverage": 0.2604
+    },
+    "evidence": {
+      "health_score": 90.0,
+      "total_evidence": 30,
+      "compression_ratio": 46.47
+    },
+    "signals": {
+      "health_score": 0.0,
+      "accepted_signals": 0,
+      "filtered_signals": 0
+    },
+    "embeddings": {
+      "health_score": 100.0,
+      "total_vectors": 1430,
+      "dimension": 384,
+      "provider": "sentence_transformers",
+      "model": "all-MiniLM-L6-v2"
+    },
+    "relationships": {
+      "health_score": 100.0,
+      "total_relationships": 9069,
+      "average_similarity": 0.896679
+    },
+    "clusters": {
+      "health_score": 100.0,
+      "total_clusters": 17,
+      "total_members": 844,
+      "singleton_rate": 0.0,
+      "low_quality_rate": 0.0
+    }
+  },
+  "warnings": [
+    "[evidence] Low evidence confidence: 0.477",
+    "[signals] adaptive thresholds: {'support_threshold': 3, 'min_observation_count': 3, 'min_confidence': 0.7, 'max_avg_rating': 3.0, 'evidence_min_group_size': 3}; filtered: {'total_evidence_input': 30, 'signals_removed_entity_only': 15, 'signals_removed_low_documents': 7, 'signals_removed_low_confidence': 4, 'signals_removed_no_category': 4}; processed 1965 documents"
+  ],
+  "recommendations": [
+    "Critical attention needed: signals (score: 0.0)",
+    "Investigate signal discovery: adaptive thresholds: {'support_threshold': 3, 'min_observation_count': 3, 'min_confidence': 0.7, 'max_avg_rating': 3.0, 'evidence_min_group_size': 3}; filtered: {'total_evidence_input': 30, 'signals_removed_entity_only': 15, 'signals_removed_low_documents': 7, 'signals_removed_low_confidence': 4, 'signals_removed_no_category': 4}; processed 1965 documents"
+  ],
+  "pipeline_timing": {
+    "documents": 0.0,
+    "observations": 0.0,
+    "evidence": 0.0,
+    "signals": 0.0,
+    "embeddings": 0.0,
+    "relationships": 0.0,
+    "clusters": 0.0
+  }
+}

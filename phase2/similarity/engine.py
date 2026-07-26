@@ -10,6 +10,8 @@ from typing import Any
 import numpy as np
 import polars as pl
 
+from pain_intelligence.knowledge.manifest import PipelineManifest, generate_run_id
+from pain_intelligence.knowledge.metadata import get_run_id_from_asset
 from phase2.embeddings.schema import SourceType
 from phase2.similarity.builder import RelationshipBuilder
 from phase2.similarity.comparer import count_frequencies
@@ -51,13 +53,25 @@ class SimilarityEngine:
     Flow:
         Embeddings → VectorIndex → Pairwise Search → RelationshipBuilder
         → ConfidencePolicy → FilterPipeline → Store → Report
+
+    Validates that input embedding assets exist and belong to the same run.
+    ALWAYS overwrites relationship output.
     """
 
-    def __init__(self, config: SimilarityEngineConfig) -> None:
+    def __init__(self, config: SimilarityEngineConfig, run_id: str | None = None) -> None:
         self._config = config
+        self._run_id = run_id or generate_run_id()
         self._provider: SimilarityProvider | None = None
         self._store = SemanticRelationshipStore(config.output_directory)
+        self._store.set_run_id(self._run_id)
         self._searcher = RelationshipSearcher(self._store)
+        self._manifest = PipelineManifest(
+            config.output_directory.parent.parent if config.output_directory.parent.parent.exists() else Path("pain_intelligence/knowledge"),
+        )
+
+    @property
+    def run_id(self) -> str:
+        return self._run_id
 
     @property
     def provider(self) -> SimilarityProvider:
@@ -78,38 +92,66 @@ class SimilarityEngine:
             TopKPerSourceFilter(self._config.top_k),
         ])
 
-    def generate(self, force: bool = False) -> dict[str, Any]:
-        """Run the full relationship generation pipeline."""
-        if not force and self._store.exists():
-            count = self._store.count()
-            if count > 0:
-                return {
-                    "total_relationships": count,
-                    "status": "skipped",
-                    "reason": "existing relationships found (use --force to recompute)",
-                }
-
-        start = time.perf_counter()
-        timestamp = datetime.now(timezone.utc).isoformat()
-
-        # Load all embedding assets
+    def _validate_input_embeddings(self) -> dict[SourceType, pl.DataFrame]:
+        """Validate that all required embedding assets exist and are consistent."""
         embeddings_by_type: dict[SourceType, pl.DataFrame] = {}
-        source_ids_by_type: dict[SourceType, list[str]] = {}
+        errors: list[str] = []
+        run_ids_found: set[str] = set()
+
         for stype, path in self._config.source_paths.items():
             if not path.exists():
+                errors.append(f"Missing embedding asset: {stype.value} at {path}")
                 continue
+
+            # Read embedded run_id
+            asset_run_id = get_run_id_from_asset(path)
+            if asset_run_id:
+                run_ids_found.add(asset_run_id)
+
             df = pl.read_parquet(str(path))
             if df.height == 0:
                 continue
             embeddings_by_type[stype] = df
-            source_ids_by_type[stype] = df["source_id"].to_list()
 
+        if not embeddings_by_type:
+            return {}
+
+        # Check model fingerprint consistency
+        model_fps = set()
+        for stype, df in embeddings_by_type.items():
+            if "model" in df.columns and df.height > 0:
+                models = df["model"].unique().to_list()
+                model_fps.update(models)
+
+        if len(model_fps) > 1:
+            errors.append(f"Inconsistent embedding models found: {model_fps}")
+
+        if errors:
+            return {}
+
+        return embeddings_by_type
+
+    def generate(self, force: bool = False) -> dict[str, Any]:
+        """Run the full relationship generation pipeline.
+
+        ALWAYS overwrites previous relationships.
+        """
+        start = time.perf_counter()
+        timestamp = datetime.now(timezone.utc).isoformat()
+
+        # Validate input embeddings
+        embeddings_by_type = self._validate_input_embeddings()
         if not embeddings_by_type:
             return {
                 "total_relationships": 0,
                 "status": "error",
-                "reason": "no embedding assets found",
+                "reason": "no valid embedding assets found",
+                "elapsed_seconds": 0,
             }
+
+        source_ids_by_type: dict[SourceType, list[str]] = {}
+        for stype, df in embeddings_by_type.items():
+            source_ids_by_type[stype] = df["source_id"].to_list()
 
         # Build VectorIndex for each source type
         indexes: dict[SourceType, LinearIndex] = {}
@@ -128,7 +170,6 @@ class SimilarityEngine:
             source_ids = source_df["source_id"].to_list()
             allowed_targets = self._config.allowed_relationships.get(source_type, [])
 
-            # Build unified index of all allowed target types
             target_dfs: list[tuple[SourceType, pl.DataFrame]] = []
             for ttype in allowed_targets:
                 if ttype in embeddings_by_type:
@@ -137,7 +178,6 @@ class SimilarityEngine:
             if not target_dfs:
                 continue
 
-            # Concatenate target vectors
             all_target_vecs_list = []
             all_target_ids_list = []
             all_target_types_list = []
@@ -151,11 +191,9 @@ class SimilarityEngine:
             target_ids = all_target_ids_list
             target_types = all_target_types_list
 
-            # Compute frequencies for confidence
             all_ids = source_ids + target_ids
             freq_map = count_frequencies(all_ids)
 
-            # Batch search
             top_k = min(self._config.top_k, target_index.size)
             for i in range(0, len(source_vecs), self._config.batch_size):
                 batch_vecs = source_vecs[i : i + self._config.batch_size]
@@ -173,10 +211,8 @@ class SimilarityEngine:
                         ttype = target_types[idx]
                         tid = target_ids[idx]
 
-                        # Record pre-filter score for threshold analysis
                         pre_filter_scores.append(sim)
 
-                        # Compute confidence before creating relationship
                         conf = confidence.compute(
                             similarity_score=sim,
                             source_frequency=freq_map.get(qid, 1),
@@ -193,10 +229,8 @@ class SimilarityEngine:
                         )
                         all_relationships.append(rel)
 
-        # Record pre-filter count
         total_pre_filter = len(all_relationships)
 
-        # Apply filter pipeline (capture stage counts)
         pipeline = self._create_filter_pipeline()
         stage_counts: dict[str, int] = {}
         filtered = all_relationships
@@ -208,33 +242,28 @@ class SimilarityEngine:
         stage_counts["total_removed"] = total_pre_filter - len(filtered)
         stage_counts["total_survived"] = len(filtered)
 
-        # Store results
-        if filtered:
-            self._store.save(filtered)
+        # ALWAYS store, even if empty
+        self._store.save(filtered)
 
         elapsed = time.perf_counter() - start
 
-        # Compute basic stats
         stats = compute_stats(
             self._store.load_df(),
             total_source_items=sum(len(ids) for ids in source_ids_by_type.values()),
         )
 
-        # Compute expanded statistics
         df = self._store.load_df() if filtered else pl.DataFrame()
         total_source_items = sum(len(ids) for ids in source_ids_by_type.values())
         expanded_stats = compute_relationship_statistics(
             df, total_source_items=total_source_items
         ) if filtered else RelationshipStatistics()
 
-        # Threshold recommendation
         recommender = ThresholdRecommender()
         threshold_rec = recommender.recommend(
             scores=pre_filter_scores,
             configured_threshold=self._config.similarity_threshold,
         )
 
-        # Generate manifest
         manifest = RelationshipManifest(
             embedding_model=self._config.embedding_model,
             embedding_fingerprint=self._config.model_fingerprint,
@@ -248,7 +277,6 @@ class SimilarityEngine:
         )
         write_manifest(manifest, self._config.output_directory)
 
-        # Generate text report
         generate_quality_report(
             stats,
             self._config.output_directory,
@@ -258,7 +286,6 @@ class SimilarityEngine:
             configured_threshold=self._config.similarity_threshold,
         )
 
-        # Generate JSON report
         write_json_report(
             expanded_stats,
             self._config.output_directory,
@@ -267,6 +294,19 @@ class SimilarityEngine:
             filter_counts=stage_counts,
             df=df if filtered else None,
         )
+
+        # Update pipeline manifest
+        self._manifest.start_run()
+        rel_path = self._config.output_directory / "semantic_relationships.parquet"
+        rc = df.height if filtered else 0
+        self._manifest.register_asset(
+            name="semantic_relationships.parquet",
+            path=rel_path,
+            record_count=rc,
+            stage="similarity",
+        )
+        self._manifest.complete_run()
+        self._manifest.save()
 
         return {
             "total_relationships": stats.total_relationships,
@@ -282,23 +322,27 @@ class SimilarityEngine:
         }
 
     def stats(self) -> RelationshipStats:
-        """Return aggregate stats over stored relationships."""
         df = self._store.load_df()
         return compute_stats(df)
 
     def detailed_stats(self) -> RelationshipStatistics:
-        """Return expanded statistics over stored relationships."""
         df = self._store.load_df()
         return compute_relationship_statistics(df)
 
     def search_relationships(self, source_id: str, k: int = 10) -> list[SemanticRelationship]:
-        """Search relationships by source_id."""
         return self._searcher.search_by_source(source_id, k=k)
 
     def verify(self) -> dict[str, Any]:
-        """Verify integrity of stored relationships."""
+        """Verify integrity of stored relationships with run_id validation."""
         df = self._store.load_df()
         result: dict[str, Any] = {"valid": True, "checks": {}}
+
+        # Check run_id
+        asset_run_id = self._store.get_run_id()
+        if asset_run_id:
+            result["checks"]["run_id"] = f"PASS ({asset_run_id})"
+        else:
+            result["checks"]["run_id"] = "WARN: no run_id metadata"
 
         if df.height == 0:
             result["valid"] = False

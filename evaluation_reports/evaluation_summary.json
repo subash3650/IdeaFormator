@@ -1,0 +1,61 @@
+{
+  "generated_at": "2026-07-26T17:58:25.225728+00:00",
+  "evaluation_version": "1.0.0",
+  "overall_health_score": 83.5,
+  "worst_stage": "signals",
+  "stages": {
+    "documents": {
+      "health_score": 100.0,
+      "total_documents": 1965,
+      "warnings": []
+    },
+    "observations": {
+      "health_score": 100.0,
+      "total_observations": 1394,
+      "warnings": []
+    },
+    "evidence": {
+      "health_score": 90.0,
+      "total_evidence": 30,
+      "warnings": [
+        "Low evidence confidence: 0.477"
+      ]
+    },
+    "signals": {
+      "health_score": 0.0,
+      "accepted_signals": 0,
+      "warnings": [
+        "adaptive thresholds: {'support_threshold': 3, 'min_observation_count': 3, 'min_confidence': 0.7, 'max_avg_rating': 3.0, 'evidence_min_group_size': 3}; filtered: {'total_evidence_input': 30, 'signals_removed_entity_only': 15, 'signals_removed_low_documents': 7, 'signals_removed_low_confidence': 4, 'signals_removed_no_category': 4}; processed 1965 documents"
+      ]
+    },
+    "embeddings": {
+      "health_score": 100.0,
+      "total_vectors": 1430,
+      "warnings": []
+    },
+    "relationships": {
+      "health_score": 100.0,
+      "total_relationships": 9069,
+      "warnings": []
+    },
+    "clusters": {
+      "health_score": 100.0,
+      "total_clusters": 17,
+      "warnings": []
+    }
+  },
+  "total_warnings": 2,
+  "recommendations": [
+    "Critical attention needed: signals (score: 0.0)",
+    "Investigate signal discovery: adaptive thresholds: {'support_threshold': 3, 'min_observation_count': 3, 'min_confidence': 0.7, 'max_avg_rating': 3.0, 'evidence_min_group_size': 3}; filtered: {'total_evidence_input': 30, 'signals_removed_entity_only': 15, 'signals_removed_low_documents': 7, 'signals_removed_low_confidence': 4, 'signals_removed_no_category': 4}; processed 1965 documents"
+  ],
+  "pipeline_timing": {
+    "documents": 0.0,
+    "observations": 0.0,
+    "evidence": 0.0,
+    "signals": 0.0,
+    "embeddings": 0.0,
+    "relationships": 0.0,
+    "clusters": 0.0
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "reviewId": "abc123-def456-ghi789",
+  "userName": "Tech Enthusiast",
+  "userImage": "https://play-lh.googleusercontent.com/a-/AOh14Gh_test",
+  "content": "Great app! The AI features are incredibly useful for daily tasks. However, it needs better offline support.",
+  "score": 4,
+  "thumbsUpCount": 42,
+  "reviewCreatedVersion": "1.2026.300",
+  "at": "2026-07-15T14:30:00Z",
+  "replyContent": "Thank you for your feedback! We're working on offline support for the next release.",
+  "repliedAt": "2026-07-16T10:00:00Z",
+  "appVersion": "1.2026.300"
+}

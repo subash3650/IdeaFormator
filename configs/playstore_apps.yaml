@@ -1,0 +1,31 @@
+# Play Store apps for market intelligence collection.
+# Organized by category for targeted pain point discovery.
+# Add packages here — the collector will process all listed apps.
+
+ai:
+  - com.openai.chatgpt
+  - com.perplexity.ai
+  - com.google.android.apps.bard
+
+productivity:
+  - com.notion.id
+  - com.todoist
+  - com.microsoft.office.outlook
+
+communication:
+  - com.discord
+  - com.slack.android
+  - com.whatsapp
+
+finance:
+  - com.phonepe.app
+  - com.google.android.apps.nbu.paisa.user
+  - com.paytm.android
+
+music:
+  - com.spotify.music
+  - com.apple.android.music
+
+maps:
+  - com.google.android.apps.maps
+  - com.waze

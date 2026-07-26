@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import json
 from pathlib import Path
 
 import typer
@@ -9,6 +10,8 @@ from rich.console import Console
 from rich.table import Table
 
 from pain_intelligence.pipeline.orchestrator import Orchestrator
+from pain_intelligence.ingestion.cli import ingest_app
+from phase2.clustering.cli import clustering_app
 from phase2.embeddings.cli import embeddings_app
 from phase2.similarity.cli import similarity_app
 
@@ -17,6 +20,8 @@ app = typer.Typer(
     help="Pain Intelligence Engine - Data Ingestion & Preprocessing Pipeline",
     add_completion=False,
 )
+app.add_typer(ingest_app)
+app.add_typer(clustering_app)
 app.add_typer(embeddings_app)
 app.add_typer(similarity_app)
 console = Console()
@@ -54,10 +59,10 @@ def analyze(
         help="Path to YAML configuration file.",
     ),
     data: str = typer.Option(
-        "outputs/processed.parquet",
+        None,
         "--data",
         "-d",
-        help="Path to processed dataset.",
+        help="Path to processed dataset. Defaults to knowledge/processed/processed.parquet.",
     ),
     debug: bool = typer.Option(
         False,
@@ -72,6 +77,20 @@ def analyze(
 ) -> None:
     """Run the knowledge extraction pipeline (Phase 1.5)."""
     console.print("[bold cyan]Pain Intelligence[/bold cyan] — Knowledge Extraction Engine v1.5.0")
+
+    if data is None:
+        ingestion_path = Path("pain_intelligence/knowledge/processed/processed.parquet")
+        legacy_path = Path("outputs/processed.parquet")
+        if ingestion_path.exists():
+            data = str(ingestion_path)
+        elif legacy_path.exists():
+            data = str(legacy_path)
+            console.print("[yellow]Using legacy outputs/processed.parquet. "
+                          "Run 'build-dataset' to create knowledge/processed/.[/yellow]")
+        else:
+            console.print("[red]No dataset found. Run 'ingest run' then 'build-dataset'.[/red]")
+            raise typer.Exit(1)
+
     console.print(f"Config: {config}, Data: {data}")
 
     if not Path(data).exists():
@@ -87,14 +106,99 @@ def analyze(
     table.add_column("Metric", style="cyan")
     table.add_column("Value", style="green")
     table.add_row("Status", result.get("status", "unknown"))
+    table.add_row("Run ID", result.get("run_id", "unknown"))
     table.add_row("Observations", str(result.get("observations_count", 0)))
     table.add_row("Evidence Records", str(result.get("evidence_count", 0)))
     table.add_row("Problem Signals", str(result.get("signal_count", 0)))
+    table.add_row("Input Documents", str(result.get("input_document_count", 0)))
     table.add_row("Elapsed Time", f"{result.get('elapsed_seconds', 0)}s")
     console.print(table)
 
+    # Show adaptive thresholds
+    thresholds = result.get("adaptive_thresholds", {})
+    if thresholds:
+        ttable = Table(title="Adaptive Thresholds")
+        ttable.add_column("Threshold", style="cyan")
+        ttable.add_column("Value", style="green")
+        for k, v in thresholds.items():
+            ttable.add_row(k, str(v))
+        console.print(ttable)
 
-@app.command()
+    # Show filtering stats
+    filtering = result.get("filtering", {})
+    if filtering:
+        ftable = Table(title="Filtering")
+        ftable.add_column("Metric", style="cyan")
+        ftable.add_column("Count", style="yellow")
+        for k, v in filtering.items():
+            ftable.add_row(k, str(v))
+        console.print(ftable)
+
+
+@app.command("build-dataset")
+def build_dataset(
+    output: str = typer.Option(
+        None,
+        "--output",
+        "-o",
+        help="Output path. Defaults to knowledge/processed/processed.parquet.",
+    ),
+    knowledge_base: str = typer.Option(
+        "pain_intelligence/knowledge",
+        "--knowledge-base",
+        help="Path to the knowledge base directory.",
+    ),
+    force: bool = typer.Option(
+        False,
+        "--force",
+        "-f",
+        help="Rebuild even if output already exists.",
+    ),
+) -> None:
+    """Build a unified dataset from all ingestion outputs."""
+    console.print("[bold cyan]Build Dataset[/bold cyan]")
+    console.print(f"Knowledge base: {knowledge_base}")
+
+    from pain_intelligence.ingestion.dataset_builder import DatasetBuilder
+
+    builder = DatasetBuilder(knowledge_base=knowledge_base)
+
+    result = builder.build(output_path=output, force=force)
+
+    if result.get("status") == "empty":
+        console.print("[yellow]No ingestion data found. Run 'ingest run' first.[/yellow]")
+        raise typer.Exit(1)
+
+    table = Table(title="Dataset Build Summary")
+    table.add_column("Metric", style="cyan")
+    table.add_column("Value", style="green")
+
+    table.add_row("Total Documents", str(result.get("total_documents", 0)))
+    table.add_row("Duplicates Removed", str(result.get("duplicates_removed", 0)))
+    table.add_row("Final Documents", str(result.get("final_documents", 0)))
+    table.add_row("Output", result.get("output_path", ""))
+    table.add_row("Elapsed Time", f"{result.get('elapsed_seconds', 0)}s")
+
+    console.print(table)
+
+    sources = result.get("sources", {})
+    if sources:
+        st = Table(title="Per-Source Breakdown")
+        st.add_column("Source", style="cyan")
+        st.add_column("Documents", style="yellow")
+        st.add_column("First Seen", style="dim")
+        st.add_column("Last Seen", style="dim")
+
+        for name, info in sources.items():
+            st.add_row(
+                name,
+                str(info.get("documents", 0)),
+                str(info.get("first_seen", ""))[:19],
+                str(info.get("last_seen", ""))[:19],
+            )
+        console.print(st)
+
+    console.print("[green]Dataset built successfully.[/green]")
 def explore(
     port: int = typer.Option(8501, "--port", "-p", help="Dashboard port."),
 ) -> None:
@@ -215,6 +319,175 @@ def stats(
         for platform, count in platform_dist.items():
             ptable.add_row(platform, str(count))
         console.print(ptable)
+
+
+@app.command()
+def dashboard(
+    output: str = typer.Option(
+        "knowledge/reports",
+        "--output",
+        "-o",
+        help="Output directory for dashboard files.",
+    ),
+) -> None:
+    """Generate pipeline quality dashboard (JSON + TXT)."""
+    console.print("[bold cyan]Generating Pipeline Dashboard...[/bold cyan]")
+
+    from pain_intelligence.pipeline.verify import generate_dashboard
+
+    dash = generate_dashboard(output_dir=output)
+
+    # Print summary
+    table = Table(title="Pipeline Dashboard Summary")
+    table.add_column("Metric", style="cyan")
+    table.add_column("Value", style="green")
+    table.add_row("Documents", str(dash.get("documents", 0)))
+    table.add_row("Observation Count", str(dash.get("observation_count", 0)))
+    table.add_row("Evidence Count", str(dash.get("evidence_count", 0)))
+    table.add_row("Problem Signals", str(dash.get("problem_signal_count", 0)))
+    table.add_row("Embedding Vectors", str(dash.get("embedding_count", 0)))
+    table.add_row("Relationships", str(dash.get("relationship_count", 0)))
+    table.add_row("Clusters", str(dash.get("cluster_count", 0)))
+    table.add_row("Pipeline Duration", str(dash.get("pipeline_duration", "N/A")))
+    table.add_row("Success/Failure", dash.get("overall_status", "unknown"))
+    console.print(table)
+
+    console.print(f"[green]Dashboard written to {output}/[/green]")
+
+
+@app.command()
+def verify(
+    config: str = typer.Option(
+        "configs/default.yaml",
+        "--config",
+        "-c",
+        help="Path to YAML configuration file.",
+    ),
+    fix: bool = typer.Option(
+        False,
+        "--fix",
+        "-f",
+        help="Attempt to fix minor issues.",
+    ),
+) -> None:
+    """Verify pipeline integrity — checks all assets, run_ids, schemas."""
+    console.print("[bold]Pipeline Integrity Verification[/bold]")
+
+    from pain_intelligence.pipeline.verify import verify_pipeline
+
+    report = verify_pipeline(config_path=config, fix=fix)
+
+    overall = report.get("overall", "UNKNOWN")
+    color = "green" if overall == "PASS" else "red" if overall == "FAIL" else "yellow"
+    console.print(f"\n[bold {color}]Overall: {overall}[/bold {color}]")
+
+    for check_name, check_result in report.get("checks", {}).items():
+        status = check_result.get("status", "UNKNOWN")
+        detail = check_result.get("detail", "")
+        scolor = "green" if status == "PASS" else "red" if status == "FAIL" else "yellow"
+        console.print(f"  [{scolor}]{status:8s}[/{scolor}] {check_name}: {detail}")
+
+    warnings = report.get("warnings", [])
+    if warnings:
+        console.print(f"\n[yellow]Warnings ({len(warnings)}):[/yellow]")
+        for w in warnings:
+            console.print(f"  [yellow]! {w}[/yellow]")
+
+    errors = report.get("errors", [])
+    if errors:
+        console.print(f"\n[red]Errors ({len(errors)}):[/red]")
+        for e in errors:
+            console.print(f"  [red]x {e}[/red]")
+
+
+@app.command()
+def evaluate(
+    knowledge_dir: str = typer.Option(
+        "pain_intelligence/knowledge",
+        "--knowledge-dir",
+        "-k",
+        help="Path to knowledge base directory.",
+    ),
+    output_dir: str = typer.Option(
+        "evaluation_reports",
+        "--output",
+        "-o",
+        help="Output directory for evaluation reports.",
+    ),
+    dashboard: bool = typer.Option(
+        False,
+        "--dashboard",
+        "-d",
+        help="Generate dashboard files in addition to reports.",
+    ),
+    json_output: bool = typer.Option(
+        False,
+        "--json",
+        "-j",
+        help="Output summary as JSON to stdout.",
+    ),
+) -> None:
+    """Evaluate pipeline quality across all stages."""
+    console.print("[bold cyan]Pain Intelligence[/bold cyan] — Pipeline Evaluation")
+
+    from phase2.evaluation.evaluator import EvaluationOrchestrator
+    from phase2.evaluation.exporter import export_all
+    from phase2.evaluation.reports import generate_summary
+
+    orchestrator = EvaluationOrchestrator(knowledge_dir=knowledge_dir)
+    result = orchestrator.evaluate()
+
+    table = Table(title="Pipeline Health Scores")
+    table.add_column("Stage", style="cyan")
+    table.add_column("Score", style="green")
+    table.add_column("Status")
+
+    stages = [
+        ("Documents", result.documents.health),
+        ("Observations", result.observations.health),
+        ("Evidence", result.evidence.health),
+        ("Signals", result.signals.health),
+        ("Embeddings", result.embeddings.health),
+        ("Relationships", result.relationships.health),
+        ("Clusters", result.clusters.health),
+    ]
+    for name, health in stages:
+        status = "PASS" if health.score >= 70 else "WARN" if health.score >= 40 else "FAIL"
+        table.add_row(name, f"{health.score:.1f}/100", status)
+    table.add_section()
+    table.add_row("[bold]Overall", f"[bold]{result.overall_health_score:.1f}/100", "")
+    console.print(table)
+
+    if result.worst_stage:
+        console.print(f"\n[yellow]Worst stage: {result.worst_stage}[/yellow]")
+
+    if result.all_warnings:
+        wt = Table(title="Warnings")
+        wt.add_column("Warning")
+        for w in result.all_warnings:
+            wt.add_row(f"[yellow]{w}[/yellow]")
+        console.print(wt)
+
+    if result.recommendations:
+        rt = Table(title="Recommendations")
+        rt.add_column("Recommendation")
+        for r in result.recommendations:
+            rt.add_row(f"[cyan]{r}[/cyan]")
+        console.print(rt)
+
+    export_all(result, output_dir=output_dir)
+
+    if dashboard:
+        from phase2.evaluation.dashboard import generate_dashboard
+        generate_dashboard(result, output_dir=output_dir)
+        console.print(f"[green]Dashboard written to {output_dir}/[/green]")
+
+    console.print(f"[green]Reports written to {output_dir}/[/green]")
+
+    if json_output:
+        import json
+        s = generate_summary(result)
+        console.print(json.dumps(s, indent=2, default=str))
 
 
 def _print_summary(stats: dict) -> None:
